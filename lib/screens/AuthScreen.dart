@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tazks/constant/colors.dart';
+import 'package:tazks/screens/MainTasksScreen.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -7,6 +8,16 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String _email;
+  String _password;
+
+    _submit() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+       Navigator.of(context).pushNamed(MainTasksScreen.routeName);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,16 +60,19 @@ class _AuthScreenState extends State<AuthScreen> {
                 ],
               ),
               Form(
+                  key: _formKey,
                 child: Column(
                   children: <Widget>[
                     TextFormField(
+                    
+                        onSaved: (input) => _email = input,
                       decoration: InputDecoration(
                           labelStyle: TextStyle(fontSize: 18),
                           labelText: 'Email'),
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please provide a value.';
+                          return 'This field cannot be empty';
                         }
                         return null;
                       },
@@ -67,13 +81,14 @@ class _AuthScreenState extends State<AuthScreen> {
                       height: 25,
                     ),
                     TextFormField(
+                          onSaved: (input) => _password = input,
                       decoration: InputDecoration(
                           labelStyle: TextStyle(fontSize: 18),
                           labelText: 'Password'),
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please provide a value.';
+                          return 'This field cannot be empty';
                         }
                         if (value.length < 6) {
                           return 'Password needs to be at least 6 characters';
@@ -93,11 +108,13 @@ class _AuthScreenState extends State<AuthScreen> {
                       'Login',
                       style: TextStyle(
                           letterSpacing: 2,
-                          fontSize: 37,
+                          fontSize: 30,
                           fontWeight: FontWeight.w600,
                           color: Color.fromRGBO(55, 66, 77, 1)),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                    _submit();
+                    },
                   ),
                 ],
               ),
