@@ -12,26 +12,25 @@ class _AuthScreenState extends State<AuthScreen> {
   String _email;
   String _password;
 
-    _submit() {
+  _submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-       Navigator.of(context).pushNamed(MainTasksScreen.routeName);
+      Navigator.of(context).pushNamed(MainTasksScreen.routeName);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: SingleChildScrollView(
-              child: GestureDetector(
-                onTap: (){
-                    FocusScope.of(context).unfocus();
-                },
-                              child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 70),
-            child: Column(
-            
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 70),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Column(
@@ -66,15 +65,14 @@ class _AuthScreenState extends State<AuthScreen> {
                     ],
                   ),
                   SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1 / 1.4,
-                      ),
+                    height: MediaQuery.of(context).size.height * 0.1 / 1.4,
+                  ),
                   Form(
-                      key: _formKey,
+                    key: _formKey,
                     child: Column(
                       children: <Widget>[
                         TextFormField(
-                        
-                            onSaved: (input) => _email = input,
+                          onSaved: (input) => _email = input,
                           decoration: InputDecoration(
                               labelStyle: TextStyle(fontSize: 18),
                               labelText: 'Email'),
@@ -90,7 +88,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           height: 25,
                         ),
                         TextFormField(
-                              onSaved: (input) => _password = input,
+                          onSaved: (input) => _password = input,
                           decoration: InputDecoration(
                               labelStyle: TextStyle(fontSize: 18),
                               labelText: 'Password'),
@@ -108,9 +106,9 @@ class _AuthScreenState extends State<AuthScreen> {
                       ],
                     ),
                   ),
-                   SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1 / 1.4,
-                      ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.1 / 1.4,
+                  ),
                   FlatButton(
                     color: Color.fromRGBO(110, 121, 139, 0.2),
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
@@ -123,12 +121,12 @@ class _AuthScreenState extends State<AuthScreen> {
                           color: Color.fromRGBO(55, 66, 77, 1)),
                     ),
                     onPressed: () {
-                    _submit();
+                      _submit();
                     },
                   ),
-                   SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.2 ,
-                      ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -158,10 +156,10 @@ class _AuthScreenState extends State<AuthScreen> {
                     ],
                   )
                 ],
+              ),
             ),
           ),
         ),
-              ),
       ),
     );
   }
