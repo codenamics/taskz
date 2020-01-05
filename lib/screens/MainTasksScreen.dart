@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:tazks/Widgets/SliverWidgetBar.dart';
 
 class MainTasksScreen extends StatefulWidget {
@@ -9,8 +10,18 @@ class MainTasksScreen extends StatefulWidget {
 }
 
 class _MainTasksScreenState extends State<MainTasksScreen> {
+  
+
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    
+  }
+  
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -19,7 +30,7 @@ class _MainTasksScreenState extends State<MainTasksScreen> {
             ];
           },
           body: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
             itemCount: 20,
             itemBuilder: (ctx, index) => Dismissible(
               key: Key(index.toString()),
