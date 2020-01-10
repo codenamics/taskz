@@ -18,8 +18,31 @@ class Tasks with ChangeNotifier {
     return [..._tasks];
   }
 
+  Task findById(String id) {
+    return _tasks.firstWhere((task) => task.id == id);
+  }
+
+
+void addTask(Task task) {
+  var taskItem = Task(id: task.id, title: task.title, description: task.description);
+    _tasks.add(taskItem);
+    notifyListeners();
+  }
+
+   Future<void> toggleStatus(id) async {
+    var taskID = _tasks.firstWhere((task) => task.id == id);
+    if(taskID.isCompleted){
+      taskID.isCompleted = false;
+    }else{
+      taskID.isCompleted = true;
+    }
+   
+    notifyListeners();
+  }
 void removeTask(String taskId) {
     _tasks.removeWhere((task) => task.id == taskId);
     notifyListeners();
   }
+
+
 }

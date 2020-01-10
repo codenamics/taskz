@@ -7,39 +7,31 @@ class Task with ChangeNotifier {
   final String id;
   final String title;
   final String description;
+  final DateTime reminderDate;
    bool isCompleted;
   
 
   Task({
-    @required this.id,
-    @required this.title,
-    @required this.description,
+    this.id,
+     this.title,
+     this.description,
+    this.reminderDate,
     this.isCompleted = false,
   });
+
+void setReminder(bool newValue) {
+    
+    notifyListeners();
+  }
 
   void _setIsCompleted(bool newValue) {
     isCompleted = newValue;
     notifyListeners();
   }
 
-  Future<void> toggleStatus(String token, String userId) async {
-    final oldStatus = isCompleted;
+  Future<void> toggleStatus(id) async {
+    
     isCompleted = !isCompleted;
     notifyListeners();
-    final url =
-        '';
-    try {
-      final response = await http.put(
-        url,
-        body: json.encode(
-          isCompleted,
-        ),
-      );
-      if (response.statusCode >= 400) {
-        _setIsCompleted(oldStatus);
-      }
-    } catch (error) {
-      _setIsCompleted(oldStatus);
-    }
   }
 }

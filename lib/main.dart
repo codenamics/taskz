@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+import 'package:tazks/provider/Task.dart';
 import 'package:tazks/provider/Tasks.dart';
 import 'package:tazks/screens/Form.dart';
 import 'package:tazks/screens/MainTasksScreen.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: Tasks(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Task(),
         )
       ],
           child: MaterialApp(
@@ -51,7 +55,8 @@ class MyApp extends StatelessWidget {
           ],
           routes: {
             MainTasksScreen.routeName: (ctx) => MainTasksScreen(),
-            EditTaskScreen.routeName: (ctx) => EditTaskScreen()
+            EditTaskScreen.routeName: (ctx) => EditTaskScreen(),
+            TaskDetails.routeName:(ctx) => TaskDetails()
           },
           ),
     );

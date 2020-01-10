@@ -1,24 +1,87 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:tazks/helpers/NotificationHelpers.dart';
+import 'package:tazks/provider/Task.dart';
+import 'package:tazks/provider/Tasks.dart';
+import 'package:intl/intl.dart';
+import '../main.dart';
 
 class TaskDetails extends StatefulWidget {
+  static final String routeName = '/task-details';
   @override
   _TaskDetailsState createState() => _TaskDetailsState();
 }
 
 class _TaskDetailsState extends State<TaskDetails> {
-  @override
+  Task _task;
+  var _isInit = true;
+  var _isLoading = false;
+  String _taskId;
+  String notifyDate = '';
+  void _updateNotifyDateTime(date) {
+    String formattedDate = DateFormat('dd/MM/yyy kk:mm').format(date);
+    setState(() {
+      notifyDate = formattedDate;
+    });
+  }
+
+  void didChangeDependencies() {
+    if (_isInit) {
+      var _isLoading = true;
+      _taskId = ModalRoute.of(context).settings.arguments as String;
+
+      _task = Provider.of<Tasks>(context, listen: false).findById(_taskId);
+    }
+    var _isLoading = false;
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   Widget build(BuildContext context) {
+    print(_taskId);
     return Scaffold(
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-        FloatingActionButton(child: Icon(Icons.edit), onPressed: (){},),
-        SizedBox(height: 20,),
-        FloatingActionButton(
-          backgroundColor: Colors.red,
-          child: Icon(Icons.delete_forever), onPressed: (){},),
-      ],),
-    
+          FloatingActionButton(
+            heroTag: Key('add'),
+            child: Icon(Icons.edit),
+            onPressed: () {},
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          FloatingActionButton(
+            backgroundColor: Colors.black,
+            heroTag: Key('alarm'),
+            child: Icon(Icons.alarm),
+            onPressed: () {
+              DatePicker.showDateTimePicker(context,
+                  showTitleActions: true,
+                  minTime: DateTime(2018),
+                  maxTime: DateTime(2222),
+                  onChanged: (date) {}, onConfirm: (date) async {
+                setState(() {
+                  _updateNotifyDateTime(date);
+                });
+
+                scheduleNotificationReminder(
+                    flutterLocalNotificationsPlugin, date, int.parse(_taskId));
+              }, currentTime: DateTime.now(), locale: LocaleType.pl);
+            },
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          FloatingActionButton(
+            heroTag: Key('delete'),
+            backgroundColor: Colors.red,
+            child: Icon(Icons.delete_forever),
+            onPressed: () {},
+          ),
+        ],
+      ),
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -36,22 +99,53 @@ class _TaskDetailsState extends State<TaskDetails> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
+        padding: const EdgeInsets.only(left: 30.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(
-              height: 20,
+              height: 35,
             ),
+            Text("Title"),
             SizedBox(
-              height: 15,
+              height: 5,
             ),
-            Text('Call workers', style: TextStyle(fontSize: 35)),
+            Container(
+                padding: EdgeInsets.all(15),
+                color: Color.fromRGBO(221, 224, 227, 0.4),
+                child: Text(_task.title, style: TextStyle(fontSize: 35))),
             Divider(
               height: 40,
               color: Colors.black87,
             ),
-            Text('phone 4567898098', style: TextStyle(fontSize: 18)),
+            Text("Description"),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+                padding: EdgeInsets.all(15),
+                color: Color.fromRGBO(221, 224, 227, 0.4),
+                child: Text(_task.description, style: TextStyle(fontSize: 18))),
+            Divider(
+              height: 40,
+              color: Colors.black87,
+            ),
+            notifyDate == ''
+                ? Container()
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Text("Remind me at:"),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(221, 224, 227, 0.4)),
+                          child: Text(notifyDate)),
+                    ],
+                  )
           ],
         ),
       ),
