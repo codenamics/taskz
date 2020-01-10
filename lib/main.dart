@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
+import 'package:tazks/provider/Tasks.dart';
+import 'package:tazks/screens/Form.dart';
 import 'package:tazks/screens/MainTasksScreen.dart';
 import 'package:tazks/screens/AuthScreen.dart';
 import 'package:tazks/screens/DateTime.dart';
+import 'package:tazks/screens/TaskDetails.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -28,20 +32,28 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        home: DateTimeForm(),
-        supportedLocales: [
-          const Locale('en'),
-          const Locale('pl'),
-        ]
-        // routes: {
-        //   MainTasksScreen.routeName: (ctx) => MainTasksScreen()
-        // },
-        );
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Tasks(),
+        )
+      ],
+          child: MaterialApp(
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          home: MainTasksScreen(),
+          supportedLocales: [
+            const Locale('en'),
+            const Locale('pl'),
+          ],
+          routes: {
+            MainTasksScreen.routeName: (ctx) => MainTasksScreen(),
+            EditTaskScreen.routeName: (ctx) => EditTaskScreen()
+          },
+          ),
+    );
   }
 }
