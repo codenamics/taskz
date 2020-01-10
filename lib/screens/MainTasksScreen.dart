@@ -38,10 +38,13 @@ class _MainTasksScreenState extends State<MainTasksScreen> {
             padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
             itemCount: tasksList.length,
             itemBuilder: (ctx, index) => Dismissible(
-              key: Key(index.toString()),
+              key: ValueKey(tasksList[index].id),
               onDismissed: (direction) {
+              
+                Provider.of<Tasks>(context, listen: false).removeTask(tasksList[index].id);
                 Scaffold.of(ctx)
                     .showSnackBar(SnackBar(content: Text(" dismissed")));
+                   print(tasksList.length);
               },
               background: Container(color: Colors.red),
               child: ListTile(
