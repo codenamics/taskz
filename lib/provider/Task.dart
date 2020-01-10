@@ -24,13 +24,7 @@ void setReminder(bool newValue) {
     notifyListeners();
   }
 
-  void _setIsCompleted(bool newValue) {
-    isCompleted = newValue;
-    notifyListeners();
-  }
-
-  Future<void> toggleStatus(id) async {
-    
+ void toggleStatus() {
     isCompleted = !isCompleted;
     notifyListeners();
   }
