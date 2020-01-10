@@ -37,15 +37,27 @@ class _TaskListState extends State<TaskList> {
               title: Text(tasksList[index].title),
               subtitle: Text(tasksList[index].description),
               leading: Consumer<Task>(
-                builder: (ctx, task, child) => IconButton(
-                  icon: Icon(
-                    task.isCompleted ? Icons.done : Icons.done_outline,
-                  ),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    task.toggleStatus();
-                  },
+                builder: (ctx, task, child) => 
+                 GestureDetector(
+                   onTap: (){
+                     task.toggleStatus();
+                   },
+                                    child: Container(
+
+                    child: task.isCompleted ? Icon(Icons.done, color: Colors.white,) : null,
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: task.isCompleted ? Colors.green :  Colors.transparent,
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(
+                            color: Color.fromRGBO(223, 223, 223, 1), width: 1.5)),
                 ),
+                 ),
+        
+        
+
+
               ),
             ),
           ),
