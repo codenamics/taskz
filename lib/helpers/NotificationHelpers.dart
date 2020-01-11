@@ -9,11 +9,11 @@ NotificationDetails platformChannelSpecifics = new NotificationDetails(
     androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
 Future<void> scheduleNotificationReminder(
-    flutterLocalNotificationsPlugin, scheduledNotificationDateTime, id) async {
+    flutterLocalNotificationsPlugin, scheduledNotificationDateTime, id, content) async {
   await flutterLocalNotificationsPlugin.schedule(
       id,
-      'scheduled title',
-      'scheduled body',
+      'Task reminder',
+      content.title,
       scheduledNotificationDateTime,
       platformChannelSpecifics);
 }

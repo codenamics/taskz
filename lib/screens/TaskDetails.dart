@@ -5,6 +5,7 @@ import 'package:tazks/helpers/NotificationHelpers.dart';
 import 'package:tazks/provider/Task.dart';
 import 'package:tazks/provider/Tasks.dart';
 import 'package:intl/intl.dart';
+import 'package:tazks/screens/Form.dart';
 import '../main.dart';
 
 class TaskDetails extends StatefulWidget {
@@ -14,10 +15,10 @@ class TaskDetails extends StatefulWidget {
 }
 
 class _TaskDetailsState extends State<TaskDetails> {
-  Task _task;
+  Task task;
   var _isInit = true;
   var _isLoading = false;
-  String _taskId;
+  String taskId;
   String notifyDate = '';
   void _updateNotifyDateTime(date) {
     String formattedDate = DateFormat('dd/MM/yyy kk:mm').format(date);
@@ -29,9 +30,9 @@ class _TaskDetailsState extends State<TaskDetails> {
   void didChangeDependencies() {
     if (_isInit) {
       var _isLoading = true;
-      _taskId = ModalRoute.of(context).settings.arguments as String;
+      taskId = ModalRoute.of(context).settings.arguments as String;
 
-      _task = Provider.of<Tasks>(context, listen: false).findById(_taskId);
+      task = Provider.of<Tasks>(context, listen: false).findById(taskId);
     }
     var _isLoading = false;
     _isInit = false;
@@ -39,15 +40,18 @@ class _TaskDetailsState extends State<TaskDetails> {
   }
 
   Widget build(BuildContext context) {
-    print(_taskId);
+   
     return Scaffold(
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
-            heroTag: Key('add'),
+            heroTag: Key('edit'),
             child: Icon(Icons.edit),
-            onPressed: () {},
+            onPressed: () {
+                Navigator.of(context).pushNamed(EditTaskScreen.routeName,
+                  arguments: taskId);
+            },
           ),
           SizedBox(
             height: 20,
@@ -67,7 +71,7 @@ class _TaskDetailsState extends State<TaskDetails> {
                 });
 
                 scheduleNotificationReminder(
-                    flutterLocalNotificationsPlugin, date, int.parse(_taskId));
+                    flutterLocalNotificationsPlugin, date, int.parse(taskId), task);
               }, currentTime: DateTime.now(), locale: LocaleType.pl);
             },
           ),
@@ -113,7 +117,7 @@ class _TaskDetailsState extends State<TaskDetails> {
             Container(
                 padding: EdgeInsets.all(15),
                 color: Color.fromRGBO(221, 224, 227, 0.4),
-                child: Text(_task.title, style: TextStyle(fontSize: 35))),
+                child: Text(task.title, style: TextStyle(fontSize: 35))),
             Divider(
               height: 40,
               color: Colors.black87,
@@ -125,7 +129,7 @@ class _TaskDetailsState extends State<TaskDetails> {
             Container(
                 padding: EdgeInsets.all(15),
                 color: Color.fromRGBO(221, 224, 227, 0.4),
-                child: Text(_task.description, style: TextStyle(fontSize: 18))),
+                child: Text(task.description, style: TextStyle(fontSize: 18))),
             Divider(
               height: 40,
               color: Colors.black87,
