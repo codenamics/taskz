@@ -36,9 +36,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   void didChangeDependencies() {
     if (_isInit) {
       final taskId = ModalRoute.of(context).settings.arguments as String;
+
       if (taskId != null) {
         _editedTask =
             Provider.of<Tasks>(context, listen: false).findById(taskId);
+        print(_editedTask.id);
+
         _initValues = {
           'title': _editedTask.title,
           'description': _editedTask.description,
@@ -49,7 +52,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     super.didChangeDependencies();
   }
 
-
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
     if (!isValid) {
@@ -59,18 +61,18 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     setState(() {
       _isLoading = true;
     });
-  Provider.of<Tasks>(context, listen: false).addTask(_editedTask);
-  Navigator.of(context).pop();
+
     if (_editedTask.id != null) {
+      print(_editedTask.id);
       Provider.of<Tasks>(context, listen: false)
           .updateTask(_editedTask.id, _editedTask);
-
+      Navigator.of(context).pushNamed(MainTasksScreen.routeName);
     } else {
       try {
-         Provider.of<Tasks>(context, listen: false)
-            .addTask(_editedTask);
+        Provider.of<Tasks>(context, listen: false).addTask(_editedTask);
+        Navigator.of(context).pop();
       } catch (e) {
-       await showDialog(
+        await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('An error occurred!'),
@@ -90,16 +92,13 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         );
       }
     }
-      setState(() {
-        _isLoading = false;
-      });
-  
-    Navigator.of(context).pop();
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_initValues['dateTime']);
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Task'),
@@ -137,8 +136,10 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         return null;
                       },
                       onSaved: (value) {
-                        print(value);
-                    _editedTask = Task(id: _editedTask.id, title: value, description: _editedTask.description);
+                        _editedTask = Task(
+                            id: _editedTask.id,
+                            title: value,
+                            description: _editedTask.description);
                       },
                     ),
                     SizedBox(
@@ -166,8 +167,10 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         return null;
                       },
                       onSaved: (value) {
-                        print(value);
-                     _editedTask = Task(id: _editedTask.id, title: _editedTask.title, description: value);
+                        _editedTask = Task(
+                            id: _editedTask.id,
+                            title: _editedTask.title,
+                            description: value);
                       },
                     ),
                     SizedBox(
@@ -184,7 +187,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         ),
                       ),
                     ),
-                  
                   ],
                 ),
               ),
