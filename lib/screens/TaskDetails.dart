@@ -81,7 +81,10 @@ class _TaskDetailsState extends State<TaskDetails> {
             heroTag: const Key('delete'),
             backgroundColor: Colors.red,
             child: const Icon(Icons.delete_forever),
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<Tasks>(context, listen: false).removeTask(taskId);
+              Navigator.of(context).pop();
+            },
           ),
         ],
       ),
