@@ -17,9 +17,6 @@ class Tasks with ChangeNotifier {
   ];
 
   List<Task> get tasks {
-    // if (_showFavoritesOnly) {
-    //   return _items.where((prodItem) => prodItem.isFavorite).toList();
-    // }
     return [..._tasks];
   }
 
@@ -28,8 +25,10 @@ class Tasks with ChangeNotifier {
   }
 
   void addTask(Task task) {
-    var taskItem =
-        Task(id: Random().nextInt(200).toString(), title: task.title, description: task.description);
+    var taskItem = Task(
+        id: Random().nextInt(200).toString(),
+        title: task.title,
+        description: task.description);
     _tasks.add(taskItem);
     notifyListeners();
   }

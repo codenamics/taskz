@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:tazks/Widgets/SliverWidgetBar.dart';
+import 'package:tazks/Widgets/SliverBar.dart';
 import 'package:tazks/Widgets/TaskList.dart';
 
 import 'package:tazks/screens/Form.dart';
@@ -18,7 +18,7 @@ class _MainTasksScreenState extends State<MainTasksScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).pushNamed(EditTaskScreen.routeName);
           },
@@ -27,7 +27,7 @@ class _MainTasksScreenState extends State<MainTasksScreen> {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                SliverWidgetBar(),
+                SliverBar(),
               ];
             },
             body: TaskList()));

@@ -36,15 +36,15 @@ class _AuthScreenState extends State<AuthScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.texture,
                         size: 50,
                         color: Colors.blueAccent,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
@@ -52,12 +52,12 @@ class _AuthScreenState extends State<AuthScreen> {
                         textAlign: TextAlign.left,
                         style: loginHeader,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 7,
                       ),
                       Text('We missed you',
                           textAlign: TextAlign.left, style: loginSubHeader),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text('There is much to be done...',
@@ -74,7 +74,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         TextFormField(
                           onSaved: (input) => _email = input,
                           decoration: InputDecoration(
-                              labelStyle: TextStyle(fontSize: 18),
+                              labelStyle: const TextStyle(fontSize: 18),
                               labelText: 'Email'),
                           textInputAction: TextInputAction.next,
                           validator: (value) {
@@ -84,13 +84,13 @@ class _AuthScreenState extends State<AuthScreen> {
                             return null;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         TextFormField(
                           onSaved: (input) => _password = input,
                           decoration: InputDecoration(
-                              labelStyle: TextStyle(fontSize: 18),
+                              labelStyle: const TextStyle(fontSize: 18),
                               labelText: 'Password'),
                           textInputAction: TextInputAction.next,
                           validator: (value) {
@@ -111,8 +111,9 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   FlatButton(
                     color: Color.fromRGBO(110, 121, 139, 0.2),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-                    child: Text(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 40),
+                    child: const Text(
                       'Login',
                       style: TextStyle(
                           letterSpacing: 2,
@@ -131,7 +132,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Text(
+                      const Text(
                         'Need account?',
                         style: TextStyle(
                             color: Color.fromRGBO(110, 121, 139, 1),
@@ -143,7 +144,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           padding: const EdgeInsets.only(
                             left: 8.0,
                           ),
-                          child: Text(
+                          child: const Text(
                             'SignUp',
                             style: TextStyle(
                                 letterSpacing: 1,

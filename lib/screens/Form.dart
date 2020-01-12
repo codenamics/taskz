@@ -1,14 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:tazks/helpers/NotificationHelpers.dart';
-import 'package:tazks/main.dart';
 import 'package:tazks/provider/Task.dart';
 import 'package:tazks/provider/Tasks.dart';
-import 'package:tazks/screens/DateTime.dart';
-import 'package:intl/intl.dart';
 import 'package:tazks/screens/MainTasksScreen.dart';
 
 class EditTaskScreen extends StatefulWidget {
@@ -22,15 +15,11 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   final _form = GlobalKey<FormState>();
 
   DateTime dateTime;
-  var _editedTask = Task(id: null, title: '', description: '');
+  var _editedTask =
+      Task(id: null, title: '', description: '', isCompleted: false);
   var _initValues = {'title': '', 'description': ''};
   var _isInit = true;
   var _isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void didChangeDependencies() {
@@ -101,17 +90,17 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Task'),
+        title: const Text('Edit Task'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
             onPressed: _saveForm,
           ),
         ],
       ),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: const CircularProgressIndicator(),
             )
           : Padding(
               padding: const EdgeInsets.all(16.0),
@@ -139,10 +128,11 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         _editedTask = Task(
                             id: _editedTask.id,
                             title: value,
-                            description: _editedTask.description);
+                            description: _editedTask.description,
+                            isCompleted: _editedTask.isCompleted);
                       },
                     ),
-                    SizedBox(
+                  const  SizedBox(
                       height: 15,
                     ),
                     TextFormField(
@@ -170,16 +160,17 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         _editedTask = Task(
                             id: _editedTask.id,
                             title: _editedTask.title,
-                            description: value);
+                            description: value,
+                            isCompleted: _editedTask.isCompleted);
                       },
                     ),
-                    SizedBox(
+                   const SizedBox(
                       height: 40,
                     ),
                     RaisedButton(
                       color: Colors.blueAccent,
                       onPressed: _saveForm,
-                      child: Padding(
+                      child: const Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Text(
                           'Add Task',

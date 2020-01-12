@@ -1,7 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-// var scheduledNotificationDateTime =
-//     new DateTime.now().add(new Duration(seconds: 5));
 var androidPlatformChannelSpecifics =
     new AndroidNotificationDetails('', '', '');
 var iOSPlatformChannelSpecifics = new IOSNotificationDetails();

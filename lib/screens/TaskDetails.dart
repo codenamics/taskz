@@ -40,26 +40,25 @@ class _TaskDetailsState extends State<TaskDetails> {
   }
 
   Widget build(BuildContext context) {
-   
     return Scaffold(
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
-            heroTag: Key('edit'),
-            child: Icon(Icons.edit),
+            heroTag: const Key('edit'),
+            child: const Icon(Icons.edit),
             onPressed: () {
-                Navigator.of(context).pushNamed(EditTaskScreen.routeName,
-                  arguments: taskId);
+              Navigator.of(context)
+                  .pushNamed(EditTaskScreen.routeName, arguments: taskId);
             },
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           FloatingActionButton(
             backgroundColor: Colors.black,
-            heroTag: Key('alarm'),
-            child: Icon(Icons.alarm),
+            heroTag: const Key('alarm'),
+            child: const Icon(Icons.alarm),
             onPressed: () {
               DatePicker.showDateTimePicker(context,
                   showTitleActions: true,
@@ -70,18 +69,18 @@ class _TaskDetailsState extends State<TaskDetails> {
                   _updateNotifyDateTime(date);
                 });
 
-                scheduleNotificationReminder(
-                    flutterLocalNotificationsPlugin, date, int.parse(taskId), task);
+                scheduleNotificationReminder(flutterLocalNotificationsPlugin,
+                    date, int.parse(taskId), task);
               }, currentTime: DateTime.now(), locale: LocaleType.pl);
             },
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           FloatingActionButton(
-            heroTag: Key('delete'),
+            heroTag: const Key('delete'),
             backgroundColor: Colors.red,
-            child: Icon(Icons.delete_forever),
+            child: const Icon(Icons.delete_forever),
             onPressed: () {},
           ),
         ],
@@ -91,13 +90,13 @@ class _TaskDetailsState extends State<TaskDetails> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.chevron_left,
             color: Colors.black,
           ),
         ),
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           'Task Details',
           style: TextStyle(color: Colors.black),
         ),
@@ -107,30 +106,31 @@ class _TaskDetailsState extends State<TaskDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 35,
             ),
-            Text("Title"),
-            SizedBox(
+            const Text("Title"),
+            const SizedBox(
               height: 5,
             ),
             Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 color: Color.fromRGBO(221, 224, 227, 0.4),
-                child: Text(task.title, style: TextStyle(fontSize: 35))),
-            Divider(
+                child: Text(task.title, style: const TextStyle(fontSize: 35))),
+            const Divider(
               height: 40,
               color: Colors.black87,
             ),
-            Text("Description"),
-            SizedBox(
+            const Text("Description"),
+            const SizedBox(
               height: 5,
             ),
             Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 color: Color.fromRGBO(221, 224, 227, 0.4),
-                child: Text(task.description, style: TextStyle(fontSize: 18))),
-            Divider(
+                child: Text(task.description,
+                    style: const TextStyle(fontSize: 18))),
+            const Divider(
               height: 40,
               color: Colors.black87,
             ),
@@ -139,12 +139,12 @@ class _TaskDetailsState extends State<TaskDetails> {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      Text("Remind me at:"),
-                      SizedBox(
+                      const Text("Remind me at:"),
+                      const SizedBox(
                         height: 5,
                       ),
                       Container(
-                          padding: EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                               color: Color.fromRGBO(221, 224, 227, 0.4)),
                           child: Text(notifyDate)),

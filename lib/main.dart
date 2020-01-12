@@ -7,7 +7,6 @@ import 'package:tazks/provider/Tasks.dart';
 import 'package:tazks/screens/Form.dart';
 import 'package:tazks/screens/MainTasksScreen.dart';
 import 'package:tazks/screens/AuthScreen.dart';
-import 'package:tazks/screens/DateTime.dart';
 import 'package:tazks/screens/TaskDetails.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tazks/provider/Tasks.dart';
 
-class SliverWidgetBar extends StatelessWidget {
+class SliverBar extends StatelessWidget {
  
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class SliverWidgetBar extends StatelessWidget {
                       child: Stack(
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(left: 15),
+                            padding: const EdgeInsets.only(left: 15),
                             child: Column(
                               crossAxisAlignment:
                                   CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class SliverWidgetBar extends StatelessWidget {
                                       fontSize: 30,
                                       color: Colors.white),
                                 ),
-                                Text(
+                               const Text(
                                   'Damian',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -51,9 +51,9 @@ class SliverWidgetBar extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Align(
+                           Align(
                               alignment: Alignment.bottomCenter,
-                              child: Container(
+                              child:  Container(
                                 height: 5,
                                 decoration: BoxDecoration(
                                     gradient: LinearGradient(
@@ -78,11 +78,11 @@ class SliverWidgetBar extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             tasksList.length.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 30, color: Colors.white),
                           ),
                          const Text('Tasks',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18, color: Colors.white38))
                         ],
                       ),
