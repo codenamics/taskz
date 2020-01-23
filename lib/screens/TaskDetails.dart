@@ -44,22 +44,36 @@ class _TaskDetailsState extends State<TaskDetails> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          FloatingActionButton(
-            heroTag: const Key('edit'),
-            child: const Icon(Icons.edit),
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               Navigator.of(context)
                   .pushNamed(EditTaskScreen.routeName, arguments: taskId);
             },
+            child: Container(
+                child: const Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                ),
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color.fromRGBO(182, 226, 246, 1),
+                          spreadRadius: 2,
+                          blurRadius: 15,
+                          offset: Offset(0, 0)),
+                    ],
+                    color: Colors.lightBlueAccent.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(
+                        color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
           ),
           const SizedBox(
             height: 20,
           ),
-          FloatingActionButton(
-            backgroundColor: Colors.black,
-            heroTag: const Key('alarm'),
-            child: const Icon(Icons.alarm),
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               DatePicker.showDateTimePicker(context,
                   showTitleActions: true,
                   minTime: DateTime(2018),
@@ -73,18 +87,53 @@ class _TaskDetailsState extends State<TaskDetails> {
                     date, int.parse(taskId), task);
               }, currentTime: DateTime.now(), locale: LocaleType.pl);
             },
+            child: Container(
+                child: const Icon(
+                  Icons.alarm,
+                  color: Colors.white,
+                ),
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.4),
+                          spreadRadius: 2,
+                          blurRadius: 15,
+                          offset: Offset(0, 0)),
+                    ],
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(
+                        color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
           ),
           const SizedBox(
             height: 20,
           ),
-          FloatingActionButton(
-            heroTag: const Key('delete'),
-            backgroundColor: Colors.red,
-            child: const Icon(Icons.delete_forever),
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               Provider.of<Tasks>(context, listen: false).removeTask(taskId);
               Navigator.of(context).pop();
             },
+            child: Container(
+                child: const Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.redAccent.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 15,
+                          offset: Offset(0, 0)),
+                    ],
+                    color: Colors.redAccent.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(
+                        color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
           ),
         ],
       ),

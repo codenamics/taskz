@@ -31,12 +31,12 @@ class _MainTasksScreenState extends State<MainTasksScreen> {
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.blueAccent.withOpacity(0.4),
-                        spreadRadius: 2.5,
+                        color: Color.fromRGBO(182, 226, 246, 1),
+                        spreadRadius: 3,
                         blurRadius: 15,
                         offset: Offset(0, 0)),
                   ],
-                  color: Colors.blueAccent.withOpacity(0.7),
+                  color: Colors.lightBlueAccent.withOpacity(0.9),
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(
                       color: Color.fromRGBO(223, 223, 223, 0), width: 0))),

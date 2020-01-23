@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tazks/Widgets/TaskTile.dart';
-import 'package:tazks/provider/Task.dart';
 import 'package:tazks/provider/Tasks.dart';
 import 'package:tazks/screens/TaskDetails.dart';
 

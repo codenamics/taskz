@@ -8,11 +8,14 @@ class TaskTile extends StatelessWidget {
   TaskTile(this.tasksList);
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(tasksList.title),
-      subtitle: Text(tasksList.description),
-      leading: Consumer<Task>(
-        builder: (ctx, task, child) => IsCompleted(task)
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical:4),
+      child: ListTile(
+        title: Text(tasksList.title),
+        subtitle: Text(tasksList.description),
+        leading: Consumer<Task>(
+          builder: (ctx, task, child) => IsCompleted(task)
+        ),
       ),
     );
   }

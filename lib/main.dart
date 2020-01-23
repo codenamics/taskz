@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          home: MainTasksScreen(),
+          home: AuthScreen(),
           supportedLocales: [
             const Locale('en'),
             const Locale('pl'),

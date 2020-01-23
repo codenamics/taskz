@@ -42,7 +42,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       const Icon(
                         Icons.texture,
                         size: 50,
-                        color: Colors.blueAccent,
+                        color: Colors.lightBlueAccent,
                       ),
                       const SizedBox(
                         height: 12,
@@ -109,21 +109,37 @@ class _AuthScreenState extends State<AuthScreen> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.1 / 1.4,
                   ),
-                  FlatButton(
-                    color: Color.fromRGBO(110, 121, 139, 0.2),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 40),
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(
-                          letterSpacing: 2,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(55, 66, 77, 1)),
-                    ),
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       _submit();
                     },
+                    child: Container(
+                        child: Center(
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(
+                              fontSize: 30,
+                              letterSpacing: 2,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        height: 60,
+                        width: 200,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromRGBO(182, 226, 246, 1),
+                                  spreadRadius: 3,
+                                  blurRadius: 15,
+                                  offset: Offset(0, 0)),
+                            ],
+                            color: Colors.lightBlueAccent.withOpacity(0.9),
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                                color: Color.fromRGBO(223, 223, 223, 0),
+                                width: 0))),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.2,

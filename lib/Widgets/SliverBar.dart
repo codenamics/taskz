@@ -3,19 +3,21 @@ import 'package:provider/provider.dart';
 import 'package:tazks/provider/Tasks.dart';
 
 class SliverBar extends StatelessWidget {
- 
   @override
   Widget build(BuildContext context) {
-     var tasksList = Provider.of<Tasks>(context).tasks;
+    var tasksList = Provider.of<Tasks>(context).tasks;
     return SliverAppBar(
+      elevation: 6,
+      forceElevated: true,
         backgroundColor: Colors.transparent,
-        expandedHeight: 250.0,
+        expandedHeight: 200.0,
         flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
+          background: Container(
               decoration: BoxDecoration(
+             
                 image: DecorationImage(
                     image: NetworkImage(
-                        'https://images.pexels.com/photos/207130/pexels-photo-207130.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'),
+                        'https://images.pexels.com/photos/339144/pexels-photo-339144.jpeg?cs=srgb&dl=abstract-antelope-canyon-art-blur-339144.jpg&fm=jpg'),
                     fit: BoxFit.cover),
               ),
               child: Row(
@@ -27,43 +29,29 @@ class SliverBar extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 15),
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                              mainAxisAlignment:
-                                  MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                               const Text(
+                                const Text(
                                   'Welcome back,',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w200,
+                                      fontWeight: FontWeight.w300,
                                       fontSize: 30,
                                       color: Colors.white),
                                 ),
-                               const Text(
+                                const Text(
                                   'Damian',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w200,
+                                      fontWeight: FontWeight.w300,
                                       fontSize: 30,
                                       color: Colors.white),
                                 ),
                               ],
                             ),
                           ),
-                           Align(
-                              alignment: Alignment.bottomCenter,
-                              child:  Container(
-                                height: 5,
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        begin: Alignment.topRight,
-                                        end: Alignment.bottomLeft,
-                                        colors: [
-                                      Colors.greenAccent,
-                                      Colors.lightGreen
-                                    ])),
-                              ))
+                       
                         ],
                       ),
                     ),
@@ -81,7 +69,7 @@ class SliverBar extends StatelessWidget {
                             style: const TextStyle(
                                 fontSize: 30, color: Colors.white),
                           ),
-                         const Text('Tasks',
+                          const Text('Tasks',
                               style: const TextStyle(
                                   fontSize: 18, color: Colors.white38))
                         ],

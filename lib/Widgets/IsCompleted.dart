@@ -23,7 +23,7 @@ class IsCompleted extends StatelessWidget {
               ? BoxDecoration(
                   boxShadow: [
                       BoxShadow(
-                          color: Color.fromRGBO(92, 250, 163, 0.6),
+                          color: Color.fromRGBO(92, 250, 163, 0.46),
                           spreadRadius: 2.6,
                           blurRadius: 16,
                           offset: Offset(0, 0)),

@@ -90,7 +90,11 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Task'),
+        leading: IconButton(icon: Icon(Icons.chevron_left), color: Colors.black, onPressed: (){
+          Navigator.of(context).pop();
+        },),
+        backgroundColor: Colors.white,
+        title: const Text('Edit Task', style: TextStyle(color: Colors.black),),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
@@ -167,17 +171,36 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                    const SizedBox(
                       height: 40,
                     ),
-                    RaisedButton(
-                      color: Colors.blueAccent,
-                      onPressed: _saveForm,
-                      child: const Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text(
-                          'Add Task',
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                       GestureDetector(
+                    onTap: _saveForm,
+                    child: Container(
+                        child: Center(
+                          child: const Text(
+                            'Add Task',
+                            style: TextStyle(
+                              fontSize: 24,
+                              letterSpacing: 2,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                        height: 60,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromRGBO(182, 226, 246, 1),
+                                  spreadRadius: 3,
+                                  blurRadius: 15,
+                                  offset: Offset(0, 0)),
+                            ],
+                            color: Colors.lightBlueAccent.withOpacity(0.9),
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                                color: Color.fromRGBO(223, 223, 223, 0),
+                                width: 0))),
+                  ),
                   ],
                 ),
               ),
