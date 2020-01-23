@@ -153,56 +153,60 @@ class _TaskDetailsState extends State<TaskDetails> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 30.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            const SizedBox(
-              height: 35,
-            ),
-            const Text("Title"),
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-                padding: const EdgeInsets.all(15),
-                color: Color.fromRGBO(221, 224, 227, 0.4),
-                child: Text(task.title, style: const TextStyle(fontSize: 35))),
-            const Divider(
-              height: 40,
-              color: Colors.black87,
-            ),
-            const Text("Description"),
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-                padding: const EdgeInsets.all(15),
-                color: Color.fromRGBO(221, 224, 227, 0.4),
-                child: Text(task.description,
-                    style: const TextStyle(fontSize: 18))),
-            const Divider(
-              height: 40,
-              color: Colors.black87,
-            ),
-            notifyDate == ''
-                ? Container()
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      const Text("Remind me at:"),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(221, 224, 227, 0.4)),
-                          child: Text(notifyDate)),
-                    ],
-                  )
-          ],
+      body: SingleChildScrollView(
+              child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              const SizedBox(
+                height: 35,
+              ),
+              const Text("Title"),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(15),
+                  color: Color.fromRGBO(221, 224, 227, 0.4),
+                  child: Text(task.title, style: const TextStyle(fontSize: 35))),
+              const Divider(
+                thickness: 3,
+                height: 40,
+                color: Colors.lightBlueAccent,
+              ),
+              const Text("Description"),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(15),
+                  color: Color.fromRGBO(221, 224, 227, 0.4),
+                  child: Text(task.description,
+                      style: const TextStyle(fontSize: 18))),
+               const Divider(
+                thickness: 3,
+                height: 40,
+                color: Colors.lightBlueAccent,
+              ),
+              notifyDate == ''
+                  ? Container()
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        const Text("Remind me at:"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(221, 224, 227, 0.4)),
+                            child: Text(notifyDate)),
+                      ],
+                    )
+            ],
+          ),
         ),
       ),
     );
