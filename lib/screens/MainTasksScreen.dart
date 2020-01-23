@@ -17,11 +17,29 @@ class _MainTasksScreenState extends State<MainTasksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () {
+        floatingActionButton: GestureDetector(
+          onTap: () {
             Navigator.of(context).pushNamed(EditTaskScreen.routeName);
           },
+          child: Container(
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              height: 60,
+              width: 60,
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.blueAccent.withOpacity(0.4),
+                        spreadRadius: 2.5,
+                        blurRadius: 15,
+                        offset: Offset(0, 0)),
+                  ],
+                  color: Colors.blueAccent.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(
+                      color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
         ),
         body: NestedScrollView(
             headerSliverBuilder:

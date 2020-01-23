@@ -60,8 +60,8 @@ class SliverBar extends StatelessWidget {
                                         begin: Alignment.topRight,
                                         end: Alignment.bottomLeft,
                                         colors: [
-                                      Colors.lightBlue,
-                                      Colors.blueAccent
+                                      Colors.greenAccent,
+                                      Colors.lightGreen
                                     ])),
                               ))
                         ],
