@@ -13,7 +13,8 @@ class EditTaskScreen extends StatefulWidget {
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
   final _form = GlobalKey<FormState>();
-
+  String title;
+  String buttonText;
   DateTime dateTime;
   var _editedTask =
       Task(id: null, title: '', description: '', isCompleted: false);
@@ -27,6 +28,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
       final taskId = ModalRoute.of(context).settings.arguments as String;
 
       if (taskId != null) {
+         title = 'Edit Task';
+         buttonText = 'Save task';
         _editedTask =
             Provider.of<Tasks>(context, listen: false).findById(taskId);
         print(_editedTask.id);
@@ -35,7 +38,11 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
           'title': _editedTask.title,
           'description': _editedTask.description,
         };
+      }else{
+        title = 'New Task';
+        buttonText = 'Add Task';
       }
+
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -52,7 +59,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     });
 
     if (_editedTask.id != null) {
-      print(_editedTask.id);
+   
       Provider.of<Tasks>(context, listen: false)
           .updateTask(_editedTask.id, _editedTask);
       Navigator.of(context).pushNamed(MainTasksScreen.routeName);
@@ -94,7 +101,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
           Navigator.of(context).pop();
         },),
         backgroundColor: Colors.white,
-        title: const Text('Edit Task', style: TextStyle(color: Colors.black),),
+        title:  Text(title, style: TextStyle(color: Colors.black),),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
@@ -175,8 +182,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     onTap: _saveForm,
                     child: Container(
                         child: Center(
-                          child: const Text(
-                            'Add Task',
+                          child:  Text(
+                            buttonText,
                             style: TextStyle(
                               fontSize: 24,
                               letterSpacing: 2,
