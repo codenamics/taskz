@@ -6,6 +6,8 @@ class SliverBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var tasksList = Provider.of<Tasks>(context).tasks;
+    var completed = Provider.of<Tasks>(context).completed;
+    print(completed);
     return SliverAppBar(
       elevation: 6,
       forceElevated: true,
@@ -65,7 +67,8 @@ class SliverBar extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Text(
-                            tasksList.length.toString(),
+                            '${completed.length.toString()}/${tasksList.length.toString()}'
+                            ,
                             style: const TextStyle(
                                 fontSize: 30, color: Colors.white),
                           ),

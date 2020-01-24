@@ -9,13 +9,17 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical:4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(
         title: Text(tasksList.title),
-        subtitle: Text(tasksList.description),
-        leading: Consumer<Task>(
-          builder: (ctx, task, child) => IsCompleted(task)
+        subtitle: Text(
+          tasksList.description,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          softWrap: false,
         ),
+        leading:
+            Consumer<Task>(builder: (ctx, task, child) => IsCompleted(task)),
       ),
     );
   }

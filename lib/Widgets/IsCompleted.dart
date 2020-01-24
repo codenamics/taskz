@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tazks/provider/Task.dart';
+import 'package:tazks/provider/Tasks.dart';
 
 class IsCompleted extends StatelessWidget {
   final Task task;
@@ -8,7 +10,7 @@ class IsCompleted extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        task.toggleStatus();
+     Provider.of<Tasks>(context, listen: false).toogleStatus(task.id); 
       },
       child: Container(
           child: task.isCompleted

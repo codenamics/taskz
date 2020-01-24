@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:tazks/Widgets/IsCompleted.dart';
 import 'package:tazks/provider/Task.dart';
 
 class Tasks with ChangeNotifier {
@@ -18,6 +19,9 @@ class Tasks with ChangeNotifier {
 
   List<Task> get tasks {
     return [..._tasks];
+  }
+  List<Task> get completed {
+    return _tasks.where((task) => task.isCompleted).toList();
   }
 
   Task findById(String id) {
@@ -41,6 +45,11 @@ class Tasks with ChangeNotifier {
 
   void removeTask(String taskId) {
     _tasks.removeWhere((task) => task.id == taskId);
+    notifyListeners();
+  }
+  void toogleStatus(String id){
+    final taskIndex = _tasks.indexWhere((task) => task.id == id);
+    _tasks[taskIndex].isCompleted = !_tasks[taskIndex].isCompleted;
     notifyListeners();
   }
 }
