@@ -20,28 +20,10 @@ class TaskDetails extends StatefulWidget {
 class _TaskDetailsState extends State<TaskDetails> {
   Task task;
   int _notifyId;
-
-  var _isInit = true;
   var _isLoading = false;
   String taskId;
   String notifyDate = '';
   @override
-
-//   void didChangeDependencies() {
-//     if (_isInit) {
-//       var _isLoading = true;
-//       taskId = ModalRoute.of(context).settings.arguments as String;
-
-//       task = Provider.of<Tasks>(context, listen: false).findById(taskId);
-// reminderDate = task.reminderDate;
-//       if (task.reminderDate != null) _updateNotifyDateTime(task.reminderDate);
-
-//     }
-
-//     var _isLoading = false;
-//     _isInit = false;
-//     super.didChangeDependencies();
-//   }
 
   void _updateNotifyDateTime(date) {
     String formattedDate = DateFormat('dd/MM/yyy kk:mm').format(date);
@@ -50,7 +32,7 @@ class _TaskDetailsState extends State<TaskDetails> {
     });
   }
 
-  Widget _datee(task) {
+  Widget _notifyDateRender(task) {
     if (task.reminderDate != null) {
       if (task.reminderDate.difference(DateTime.now()).inSeconds >= 0) {
         String formattedDate =
@@ -254,7 +236,7 @@ class _TaskDetailsState extends State<TaskDetails> {
                 height: 40,
                 color: Colors.lightBlueAccent,
               ),
-              _datee(task)
+              _notifyDateRender(task)
             ],
           ),
         ),
