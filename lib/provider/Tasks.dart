@@ -15,6 +15,14 @@ class Tasks with ChangeNotifier {
     Task(id: '5', title: 'React', description: 'qwsazxcdfed'),
     Task(
         id: '6', title: 'React', description: 'qwsazxcdfed', isCompleted: true),
+        Task(id: '7', title: 'React', description: 'qwsazxcdfed'),
+        Task(id: '8', title: 'React', description: 'qwsazxcdfed'),
+        Task(id: '9', title: 'React', description: 'qwsazxcdfed'),
+        Task(id: '10', title: 'React', description: 'qwsazxcdfed'),
+        Task(id: '11', title: 'React', description: 'qwsazxcdfed'),
+        Task(id: '12', title: 'React', description: 'qwsazxcdfed'),
+        Task(id: '13', title: 'React', description: 'qwsazxcdfed'),
+        Task(id: '14', title: 'React', description: 'qwsazxcdfed'),
   ];
 
   List<Task> get tasks {

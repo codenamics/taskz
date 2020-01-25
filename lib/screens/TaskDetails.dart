@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
@@ -20,24 +18,29 @@ class TaskDetails extends StatefulWidget {
 class _TaskDetailsState extends State<TaskDetails> {
   Task task;
   int _notifyId;
+  var _isInit = true;
   var _isLoading = false;
-  String taskId;
-  String notifyDate = '';
+  String _taskId;
+  DateTime _remindDate;
   @override
-
-  void _updateNotifyDateTime(date) {
-    String formattedDate = DateFormat('dd/MM/yyy kk:mm').format(date);
-    setState(() {
-      notifyDate = formattedDate;
-    });
+  void didChangeDependencies() {
+    if (_isInit) {
+      _taskId = ModalRoute.of(context).settings.arguments as String;
+     
+        task = Provider.of<Tasks>(context, listen: false).findById(_taskId);
+     
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
-  Widget _notifyDateRender(task) {
-    if (task.reminderDate != null) {
-      if (task.reminderDate.difference(DateTime.now()).inSeconds >= 0) {
+  Widget _notifyDateRender(reminderDate) {
+    print(reminderDate);
+    if (reminderDate != null) {
+      if (reminderDate.difference(DateTime.now()).inSeconds >= 0) {
         String formattedDate =
-            DateFormat('dd/MM/yyy kk:mm').format(task.reminderDate);
-        print(task.reminderDate.difference(DateTime.now()).inSeconds);
+            DateFormat('dd/MM/yyy kk:mm').format(reminderDate);
+        print(reminderDate.difference(DateTime.now()).inSeconds);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -53,7 +56,6 @@ class _TaskDetailsState extends State<TaskDetails> {
           ],
         );
       } else {
-        print(task.reminderDate.difference(DateTime.now()).inSeconds);
         return Container();
       }
     } else {
@@ -62,12 +64,6 @@ class _TaskDetailsState extends State<TaskDetails> {
   }
 
   Widget build(BuildContext context) {
-    taskId = ModalRoute.of(context).settings.arguments as String;
-
-    task = Provider.of<Tasks>(context, listen: false).findById(taskId);
-
-    if (task.reminderDate != null) _updateNotifyDateTime(task.reminderDate);
-
     return Scaffold(
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -75,7 +71,7 @@ class _TaskDetailsState extends State<TaskDetails> {
           GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .pushNamed(EditTaskScreen.routeName, arguments: taskId);
+                  .pushNamed(EditTaskScreen.routeName, arguments: _taskId);
             },
             child: Container(
                 child: const Icon(
@@ -107,14 +103,11 @@ class _TaskDetailsState extends State<TaskDetails> {
                   minTime: DateTime(2018),
                   maxTime: DateTime(2222),
                   onChanged: (date) {}, onConfirm: (date) async {
-                setState(() {
-                  _updateNotifyDateTime(date);
-                });
                 _notifyId = Random().nextInt(9999999);
                 scheduleNotificationReminder(
                     flutterLocalNotificationsPlugin, date, _notifyId, task);
                 Task _task = Task(
-                    id: taskId,
+                    id: _taskId,
                     title: task.title,
                     description: task.description,
                     isCompleted: task.isCompleted,
@@ -122,7 +115,10 @@ class _TaskDetailsState extends State<TaskDetails> {
                     notifyId: _notifyId);
 
                 Provider.of<Tasks>(context, listen: false)
-                    .updateTask(taskId, _task);
+                    .updateTask(_taskId, _task);
+                setState(() {
+                  _remindDate = date;
+                });
               }, currentTime: DateTime.now(), locale: LocaleType.pl);
             },
             child: Container(
@@ -150,15 +146,12 @@ class _TaskDetailsState extends State<TaskDetails> {
           ),
           GestureDetector(
             onTap: () async {
+              Provider.of<Tasks>(context, listen: false).removeTask(_taskId);
+
               if (task.notifyId != null) {
                 await removeNotification(
                     flutterLocalNotificationsPlugin, task.notifyId);
-              } else {
-                await removeNotification(
-                    flutterLocalNotificationsPlugin, _notifyId);
               }
-              Provider.of<Tasks>(context, listen: false).removeTask(taskId);
-
               Navigator.of(context).pop();
             },
             child: Container(
@@ -236,7 +229,23 @@ class _TaskDetailsState extends State<TaskDetails> {
                 height: 40,
                 color: Colors.lightBlueAccent,
               ),
-              _notifyDateRender(task)
+              _remindDate != null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        const Text("Remind me at:"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(221, 224, 227, 0.4)),
+                            child: Text(DateFormat('dd/MM/yyy kk:mm')
+                                .format(_remindDate))),
+                      ],
+                    )
+                  : _notifyDateRender(task.reminderDate)
             ],
           ),
         ),

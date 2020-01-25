@@ -27,9 +27,11 @@ class _TaskListState extends State<TaskList> {
           onDismissed: (direction) async {
             Provider.of<Tasks>(context, listen: false)
                 .removeTask(tasksList[index].id);
-     
-            await removeNotification(
-                flutterLocalNotificationsPlugin, tasksList[index].notifyId);
+            if (tasksList[index].notifyId != null) {
+              await removeNotification(
+                  flutterLocalNotificationsPlugin, tasksList[index].notifyId);
+            }
+
             Scaffold.of(ctx)
                 .showSnackBar(SnackBar(content: Text(" dismissed")));
           },
