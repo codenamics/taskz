@@ -20,25 +20,28 @@ class TaskDetails extends StatefulWidget {
 class _TaskDetailsState extends State<TaskDetails> {
   Task task;
   int _notifyId;
+
   var _isInit = true;
   var _isLoading = false;
   String taskId;
   String notifyDate = '';
+  @override
 
-  void didChangeDependencies() {
-    if (_isInit) {
-      var _isLoading = true;
-      taskId = ModalRoute.of(context).settings.arguments as String;
+//   void didChangeDependencies() {
+//     if (_isInit) {
+//       var _isLoading = true;
+//       taskId = ModalRoute.of(context).settings.arguments as String;
 
-      task = Provider.of<Tasks>(context, listen: false).findById(taskId);
+//       task = Provider.of<Tasks>(context, listen: false).findById(taskId);
+// reminderDate = task.reminderDate;
+//       if (task.reminderDate != null) _updateNotifyDateTime(task.reminderDate);
 
-      if (task.reminderDate != null) _updateNotifyDateTime(task.reminderDate);
-      
-    }
-    var _isLoading = false;
-    _isInit = false;
-    super.didChangeDependencies();
-  }
+//     }
+
+//     var _isLoading = false;
+//     _isInit = false;
+//     super.didChangeDependencies();
+//   }
 
   void _updateNotifyDateTime(date) {
     String formattedDate = DateFormat('dd/MM/yyy kk:mm').format(date);
@@ -46,26 +49,43 @@ class _TaskDetailsState extends State<TaskDetails> {
       notifyDate = formattedDate;
     });
   }
-  //TO DO
- void removeRemiderDate(task) async {
-    var pendingNotificationRequests =
-        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
 
-    if (pendingNotificationRequests.length != 0) {
-      pendingNotificationRequests.forEach((f) {
-        if (f.id != task.notifyId) {
-          print(f.id);
-          setState(() {
-            notifyDate = '';
-          });
-        }
-      });
+  Widget _datee(task) {
+    if (task.reminderDate != null) {
+      if (task.reminderDate.difference(DateTime.now()).inSeconds >= 0) {
+        String formattedDate =
+            DateFormat('dd/MM/yyy kk:mm').format(task.reminderDate);
+        print(task.reminderDate.difference(DateTime.now()).inSeconds);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            const Text("Remind me at:"),
+            const SizedBox(
+              height: 5,
+            ),
+            Container(
+                padding: const EdgeInsets.all(20),
+                decoration:
+                    BoxDecoration(color: Color.fromRGBO(221, 224, 227, 0.4)),
+                child: Text(formattedDate)),
+          ],
+        );
+      } else {
+        print(task.reminderDate.difference(DateTime.now()).inSeconds);
+        return Container();
+      }
+    } else {
+      return Container();
     }
   }
- 
 
   Widget build(BuildContext context) {
-    print(_isInit);
+    taskId = ModalRoute.of(context).settings.arguments as String;
+
+    task = Provider.of<Tasks>(context, listen: false).findById(taskId);
+
+    if (task.reminderDate != null) _updateNotifyDateTime(task.reminderDate);
+
     return Scaffold(
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -149,11 +169,9 @@ class _TaskDetailsState extends State<TaskDetails> {
           GestureDetector(
             onTap: () async {
               if (task.notifyId != null) {
-     
                 await removeNotification(
                     flutterLocalNotificationsPlugin, task.notifyId);
               } else {
-             
                 await removeNotification(
                     flutterLocalNotificationsPlugin, _notifyId);
               }
@@ -236,22 +254,7 @@ class _TaskDetailsState extends State<TaskDetails> {
                 height: 40,
                 color: Colors.lightBlueAccent,
               ),
-              notifyDate == '' || notifyDate == null
-                  ? Container()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        const Text("Remind me at:"),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(221, 224, 227, 0.4)),
-                            child: Text(notifyDate)),
-                      ],
-                    )
+              _datee(task)
             ],
           ),
         ),

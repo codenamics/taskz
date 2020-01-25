@@ -40,11 +40,12 @@ class Tasks with ChangeNotifier {
   void updateTask(String id, Task newTask) async {
     final taskIndex = _tasks.indexWhere((task) => task.id == id);
     _tasks[taskIndex] = newTask;
+    print(newTask.reminderDate);
     notifyListeners();
   }
 
   void removeTask(String taskId) {
-    
+
     _tasks.removeWhere((task) => task.id == taskId);
     notifyListeners();
   }
