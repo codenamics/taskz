@@ -139,6 +139,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         _editedTask = Task(
                             id: _editedTask.id,
                             title: value,
+                            reminderDate: _editedTask.reminderDate,
                             description: _editedTask.description,
                             isCompleted: _editedTask.isCompleted);
                       },
@@ -171,6 +172,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                         _editedTask = Task(
                             id: _editedTask.id,
                             title: _editedTask.title,
+                            reminderDate: _editedTask.reminderDate,
                             description: value,
                             isCompleted: _editedTask.isCompleted);
                       },
