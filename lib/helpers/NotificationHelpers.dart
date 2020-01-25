@@ -15,3 +15,7 @@ Future<void> scheduleNotificationReminder(
       scheduledNotificationDateTime,
       platformChannelSpecifics);
 }
+
+Future<void> removeNotification(flutterLocalNotificationsPlugin, int notifyId) async{
+  await flutterLocalNotificationsPlugin.cancel(notifyId);
+}

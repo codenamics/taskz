@@ -32,7 +32,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
          buttonText = 'Save task';
         _editedTask =
             Provider.of<Tasks>(context, listen: false).findById(taskId);
-        print(_editedTask.id);
+   
 
         _initValues = {
           'title': _editedTask.title,

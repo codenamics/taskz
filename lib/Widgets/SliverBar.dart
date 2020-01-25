@@ -7,7 +7,7 @@ class SliverBar extends StatelessWidget {
   Widget build(BuildContext context) {
     var tasksList = Provider.of<Tasks>(context).tasks;
     var completed = Provider.of<Tasks>(context).completed;
-    print(completed);
+    
     return SliverAppBar(
       elevation: 6,
       forceElevated: true,

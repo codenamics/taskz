@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tazks/Widgets/TaskTile.dart';
+import 'package:tazks/helpers/NotificationHelpers.dart';
 import 'package:tazks/provider/Tasks.dart';
 import 'package:tazks/screens/TaskDetails.dart';
+import '../main.dart';
 
 class TaskList extends StatefulWidget {
   @override
@@ -20,21 +24,22 @@ class _TaskListState extends State<TaskList> {
         value: tasksList[index],
         child: Dismissible(
           key: ValueKey(tasksList[index].id),
-          onDismissed: (direction) {
+          onDismissed: (direction) async {
             Provider.of<Tasks>(context, listen: false)
                 .removeTask(tasksList[index].id);
+     
+            await removeNotification(
+                flutterLocalNotificationsPlugin, tasksList[index].notifyId);
             Scaffold.of(ctx)
                 .showSnackBar(SnackBar(content: Text(" dismissed")));
-            print(tasksList.length);
           },
           background: Container(color: Colors.red),
           child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(TaskDetails.routeName,
-                  arguments: tasksList[index].id);
-            },
-            child: TaskTile(tasksList[index])
-          ),
+              onTap: () async {
+                Navigator.of(context).pushNamed(TaskDetails.routeName,
+                    arguments: tasksList[index].id);
+              },
+              child: TaskTile(tasksList[index])),
         ),
       ),
     );

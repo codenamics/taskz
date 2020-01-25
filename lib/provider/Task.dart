@@ -5,6 +5,7 @@ class Task with ChangeNotifier {
   final String title;
   final String description;
   final DateTime reminderDate;
+  int notifyId;
   bool isCompleted;
 
   Task({
@@ -12,7 +13,9 @@ class Task with ChangeNotifier {
     this.title,
     this.description,
     this.reminderDate,
+    this.notifyId,
     this.isCompleted = false,
+    
   });
 
   void setReminder(bool newValue) {

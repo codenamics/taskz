@@ -44,6 +44,7 @@ class Tasks with ChangeNotifier {
   }
 
   void removeTask(String taskId) {
+    
     _tasks.removeWhere((task) => task.id == taskId);
     notifyListeners();
   }

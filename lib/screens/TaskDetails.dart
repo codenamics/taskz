@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
@@ -16,16 +19,11 @@ class TaskDetails extends StatefulWidget {
 
 class _TaskDetailsState extends State<TaskDetails> {
   Task task;
+  int _notifyId;
   var _isInit = true;
   var _isLoading = false;
   String taskId;
   String notifyDate = '';
-  void _updateNotifyDateTime(date) {
-    String formattedDate = DateFormat('dd/MM/yyy kk:mm').format(date);
-    setState(() {
-      notifyDate = formattedDate;
-    });
-  }
 
   void didChangeDependencies() {
     if (_isInit) {
@@ -33,13 +31,41 @@ class _TaskDetailsState extends State<TaskDetails> {
       taskId = ModalRoute.of(context).settings.arguments as String;
 
       task = Provider.of<Tasks>(context, listen: false).findById(taskId);
+
+      if (task.reminderDate != null) _updateNotifyDateTime(task.reminderDate);
+      
     }
     var _isLoading = false;
     _isInit = false;
     super.didChangeDependencies();
   }
 
+  void _updateNotifyDateTime(date) {
+    String formattedDate = DateFormat('dd/MM/yyy kk:mm').format(date);
+    setState(() {
+      notifyDate = formattedDate;
+    });
+  }
+  //TO DO
+ void removeRemiderDate(task) async {
+    var pendingNotificationRequests =
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+
+    if (pendingNotificationRequests.length != 0) {
+      pendingNotificationRequests.forEach((f) {
+        if (f.id != task.notifyId) {
+          print(f.id);
+          setState(() {
+            notifyDate = '';
+          });
+        }
+      });
+    }
+  }
+ 
+
   Widget build(BuildContext context) {
+    print(_isInit);
     return Scaffold(
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -82,9 +108,19 @@ class _TaskDetailsState extends State<TaskDetails> {
                 setState(() {
                   _updateNotifyDateTime(date);
                 });
+                _notifyId = Random().nextInt(9999999);
+                scheduleNotificationReminder(
+                    flutterLocalNotificationsPlugin, date, _notifyId, task);
+                Task _task = Task(
+                    id: taskId,
+                    title: task.title,
+                    description: task.description,
+                    isCompleted: task.isCompleted,
+                    reminderDate: date,
+                    notifyId: _notifyId);
 
-                scheduleNotificationReminder(flutterLocalNotificationsPlugin,
-                    date, int.parse(taskId), task);
+                Provider.of<Tasks>(context, listen: false)
+                    .updateTask(taskId, _task);
               }, currentTime: DateTime.now(), locale: LocaleType.pl);
             },
             child: Container(
@@ -111,8 +147,18 @@ class _TaskDetailsState extends State<TaskDetails> {
             height: 20,
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              if (task.notifyId != null) {
+     
+                await removeNotification(
+                    flutterLocalNotificationsPlugin, task.notifyId);
+              } else {
+             
+                await removeNotification(
+                    flutterLocalNotificationsPlugin, _notifyId);
+              }
               Provider.of<Tasks>(context, listen: false).removeTask(taskId);
+
               Navigator.of(context).pop();
             },
             child: Container(
@@ -154,7 +200,7 @@ class _TaskDetailsState extends State<TaskDetails> {
         ),
       ),
       body: SingleChildScrollView(
-              child: Padding(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -169,7 +215,8 @@ class _TaskDetailsState extends State<TaskDetails> {
               Container(
                   padding: const EdgeInsets.all(15),
                   color: Color.fromRGBO(221, 224, 227, 0.4),
-                  child: Text(task.title, style: const TextStyle(fontSize: 35))),
+                  child:
+                      Text(task.title, style: const TextStyle(fontSize: 35))),
               const Divider(
                 thickness: 3,
                 height: 40,
@@ -184,12 +231,12 @@ class _TaskDetailsState extends State<TaskDetails> {
                   color: Color.fromRGBO(221, 224, 227, 0.4),
                   child: Text(task.description,
                       style: const TextStyle(fontSize: 18))),
-               const Divider(
+              const Divider(
                 thickness: 3,
                 height: 40,
                 color: Colors.lightBlueAccent,
               ),
-              notifyDate == ''
+              notifyDate == '' || notifyDate == null
                   ? Container()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

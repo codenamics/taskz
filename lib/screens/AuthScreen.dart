@@ -15,7 +15,7 @@ class _AuthScreenState extends State<AuthScreen> {
   _submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      Navigator.of(context).pushNamed(MainTasksScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(MainTasksScreen.routeName);
     }
   }
 
