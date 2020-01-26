@@ -16,11 +16,19 @@ class SliverBar extends StatelessWidget {
         flexibleSpace: FlexibleSpaceBar(
           background: Container(
               decoration: BoxDecoration(
-             
-                image: DecorationImage(
-                    image: NetworkImage(
-                        'https://images.pexels.com/photos/339144/pexels-photo-339144.jpeg?cs=srgb&dl=abstract-antelope-canyon-art-blur-339144.jpg&fm=jpg'),
-                    fit: BoxFit.cover),
+                
+                gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: <Color>[
+                            Colors.lightBlueAccent,
+                            Colors.blueAccent
+                          ],
+                        ),
+                // image: DecorationImage(
+                //     image: NetworkImage(
+                //         'https://images.pexels.com/photos/339144/pexels-photo-339144.jpeg?cs=srgb&dl=abstract-antelope-canyon-art-blur-339144.jpg&fm=jpg'),
+                //     fit: BoxFit.cover),
               ),
               child: Row(
                 children: <Widget>[

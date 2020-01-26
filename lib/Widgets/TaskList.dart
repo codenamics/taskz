@@ -41,7 +41,16 @@ class _TaskListState extends State<TaskList> {
                 Navigator.of(context).pushNamed(TaskDetails.routeName,
                     arguments: tasksList[index].id);
               },
-              child: TaskTile(tasksList[index])),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TaskTile(tasksList[index])),
+              )),
         ),
       ),
     );
