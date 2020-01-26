@@ -9,22 +9,24 @@ class SliverBar extends StatelessWidget {
     var completed = Provider.of<Tasks>(context).completed;
     
     return SliverAppBar(
-      elevation: 6,
-      forceElevated: true,
-        backgroundColor: Colors.transparent,
-        expandedHeight: 200.0,
+     
+      elevation: 2,
+     
+     forceElevated: true,
+        backgroundColor: Colors.white,
+        expandedHeight: 150.0,
         flexibleSpace: FlexibleSpaceBar(
           background: Container(
               decoration: BoxDecoration(
-                
-                gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: <Color>[
-                            Colors.lightBlueAccent,
-                            Colors.blueAccent
-                          ],
-                        ),
+                color: Colors.white,
+                // gradient: LinearGradient(
+                //           begin: Alignment.topLeft,
+                //           end: Alignment.bottomRight,
+                //           colors: <Color>[
+                //             Colors.lightBlueAccent,
+                //             Colors.blueAccent
+                //           ],
+                //         ),
                 // image: DecorationImage(
                 //     image: NetworkImage(
                 //         'https://images.pexels.com/photos/339144/pexels-photo-339144.jpeg?cs=srgb&dl=abstract-antelope-canyon-art-blur-339144.jpg&fm=jpg'),
@@ -43,20 +45,21 @@ class SliverBar extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 const Text(
-                                  'Welcome back,',
+                                  'HEY THERE,',
+                                  
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 30,
-                                      color: Colors.white),
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 32,
+                                      color: Colors.black),
                                 ),
                                 const Text(
-                                  'Damian',
+                                  'DAMIAN',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w300,
-                                      fontSize: 30,
-                                      color: Colors.white),
+                                      fontSize: 32,
+                                      color: Colors.black54),
                                 ),
                               ],
                             ),
@@ -67,7 +70,7 @@ class SliverBar extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: Colors.black54,
+                    color: Colors.white,
                     width: 150,
                     child: Center(
                       child: Column(
@@ -78,17 +81,19 @@ class SliverBar extends StatelessWidget {
                             '${completed.length.toString()}/${tasksList.length.toString()}'
                             ,
                             style: const TextStyle(
-                                fontSize: 30, color: Colors.white),
+                              fontWeight: FontWeight.w700,
+                                fontSize: 30, color: Colors.black),
                           ),
                           const Text('Tasks',
                               style: const TextStyle(
-                                  fontSize: 18, color: Colors.white38))
+                                fontWeight: FontWeight.w500,
+                                  fontSize: 18, color: Colors.black54))
                         ],
                       ),
                     ),
                   ),
                 ],
-              )),
+              ),),
         ));
   }
 }
