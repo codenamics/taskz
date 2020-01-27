@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:tazks/helpers/NotificationHelpers.dart';
 import 'package:tazks/provider/Task.dart';
@@ -22,25 +23,40 @@ class _TaskDetailsState extends State<TaskDetails> {
   var _isLoading = false;
   String _taskId;
   DateTime _remindDate;
+  PermissionStatus permission;
   @override
-  void didChangeDependencies() {
+  void initState() {
+    setState(() {
+       _isLoading = true;
+    });
+   
+    PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.notification)
+        .then((res) {
+      setState(() {
+        permission = res;
+ _isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
+  void didChangeDependencies() async {
     if (_isInit) {
       _taskId = ModalRoute.of(context).settings.arguments as String;
-     
-        task = Provider.of<Tasks>(context, listen: false).findById(_taskId);
-     
+
+      task = Provider.of<Tasks>(context, listen: false).findById(_taskId);
     }
     _isInit = false;
     super.didChangeDependencies();
   }
 
   Widget _notifyDateRender(reminderDate) {
-    print(reminderDate);
     if (reminderDate != null) {
       if (reminderDate.difference(DateTime.now()).inSeconds >= 0) {
         String formattedDate =
             DateFormat('dd/MM/yyy kk:mm').format(reminderDate);
-        print(reminderDate.difference(DateTime.now()).inSeconds);
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -63,8 +79,76 @@ class _TaskDetailsState extends State<TaskDetails> {
     }
   }
 
+  Widget _notifications(permission) {
+    print(permission);
+    if (permission == PermissionStatus.granted && permission != null) {
+      return GestureDetector(
+        onTap: () {
+          DatePicker.showDateTimePicker(context,
+              showTitleActions: true,
+              minTime: DateTime(2018),
+              maxTime: DateTime(2222),
+              onChanged: (date) {}, onConfirm: (date) async {
+            _notifyId = Random().nextInt(9999999);
+            scheduleNotificationReminder(
+                flutterLocalNotificationsPlugin, date, _notifyId, task);
+            Task _task = Task(
+                id: _taskId,
+                title: task.title,
+                description: task.description,
+                isCompleted: task.isCompleted,
+                reminderDate: date,
+                notifyId: _notifyId);
+
+            Provider.of<Tasks>(context, listen: false)
+                .updateTask(_taskId, _task);
+            setState(() {
+              _remindDate = date;
+            });
+          }, currentTime: DateTime.now(), locale: LocaleType.pl);
+        },
+        child: Container(
+            child: const Icon(
+              Icons.alarm,
+              color: Colors.white,
+            ),
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.4),
+                      spreadRadius: 2,
+                      blurRadius: 15,
+                      offset: Offset(0, 0)),
+                ],
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(50),
+                border: Border.all(
+                    color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
+      );
+    }
+    if (permission == PermissionStatus.denied && permission != null) {
+      return Container(
+          child: const Icon(
+            Icons.alarm_off,
+            color: Colors.white,
+          ),
+          height: 60,
+          width: 60,
+          decoration: BoxDecoration(
+          
+              color: Colors.grey[400],
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(
+                  color: Color.fromRGBO(223, 223, 223, 0), width: 0)));
+    }
+    return Container();
+  }
+
   Widget build(BuildContext context) {
-    return Scaffold(
+    
+    return _isLoading ? Scaffold(body: Center(child: CircularProgressIndicator(),),) : Scaffold(
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
@@ -96,51 +180,7 @@ class _TaskDetailsState extends State<TaskDetails> {
           const SizedBox(
             height: 20,
           ),
-          GestureDetector(
-            onTap: () {
-              DatePicker.showDateTimePicker(context,
-                  showTitleActions: true,
-                  minTime: DateTime(2018),
-                  maxTime: DateTime(2222),
-                  onChanged: (date) {}, onConfirm: (date) async {
-                _notifyId = Random().nextInt(9999999);
-                scheduleNotificationReminder(
-                    flutterLocalNotificationsPlugin, date, _notifyId, task);
-                Task _task = Task(
-                    id: _taskId,
-                    title: task.title,
-                    description: task.description,
-                    isCompleted: task.isCompleted,
-                    reminderDate: date,
-                    notifyId: _notifyId);
-
-                Provider.of<Tasks>(context, listen: false)
-                    .updateTask(_taskId, _task);
-                setState(() {
-                  _remindDate = date;
-                });
-              }, currentTime: DateTime.now(), locale: LocaleType.pl);
-            },
-            child: Container(
-                child: const Icon(
-                  Icons.alarm,
-                  color: Colors.white,
-                ),
-                height: 60,
-                width: 60,
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.4),
-                          spreadRadius: 2,
-                          blurRadius: 15,
-                          offset: Offset(0, 0)),
-                    ],
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(
-                        color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
-          ),
+ _notifications(permission),
           const SizedBox(
             height: 20,
           ),

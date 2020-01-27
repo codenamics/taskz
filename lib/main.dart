@@ -8,12 +8,14 @@ import 'package:tazks/screens/Form.dart';
 import 'package:tazks/screens/MainTasksScreen.dart';
 import 'package:tazks/screens/AuthScreen.dart';
 import 'package:tazks/screens/TaskDetails.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 void main() async {
+ 
   WidgetsFlutterBinding.ensureInitialized();
-
+  
   var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
   var initializationSettingsIOS = IOSInitializationSettings(
       onDidReceiveLocalNotification:
@@ -32,6 +34,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(

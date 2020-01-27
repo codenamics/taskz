@@ -8,7 +8,7 @@ class TaskTile extends StatelessWidget {
   TaskTile(this.tasksList);
   @override
   Widget build(BuildContext context) {
-    print(tasksList.reminderDate);
+   
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(

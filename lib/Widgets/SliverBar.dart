@@ -71,7 +71,7 @@ class SliverBar extends StatelessWidget {
                   ),
                   Container(
                     color: Colors.white,
-                    width: 150,
+                    width: 170,
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -82,12 +82,12 @@ class SliverBar extends StatelessWidget {
                             ,
                             style: const TextStyle(
                               fontWeight: FontWeight.w700,
-                                fontSize: 30, color: Colors.black),
+                                fontSize: 40, color: Colors.black),
                           ),
                           const Text('Tasks',
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
-                                  fontSize: 18, color: Colors.black54))
+                                  fontSize: 20, color: Colors.black54))
                         ],
                       ),
                     ),
