@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:tazks/Widgets/TaskTile.dart';
 import 'package:tazks/helpers/NotificationHelpers.dart';
@@ -29,7 +26,7 @@ class _TaskListState extends State<TaskList> {
             Provider.of<Tasks>(context, listen: false)
                 .removeTask(tasksList[index].id);
             if (tasksList[index].notifyId != null) {
-              await removeNotification(
+              await NotificationHelper.removeNotification(
                   flutterLocalNotificationsPlugin, tasksList[index].notifyId);
             }
 
@@ -41,7 +38,6 @@ class _TaskListState extends State<TaskList> {
               onTap: () async {
                 Navigator.of(context).pushNamed(TaskDetails.routeName,
                     arguments: tasksList[index].id);
-                   
               },
               child: Padding(
                 padding:

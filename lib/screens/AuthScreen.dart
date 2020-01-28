@@ -97,9 +97,9 @@ class _AuthScreenState extends State<AuthScreen> {
                             if (value.isEmpty) {
                               return 'This field cannot be empty';
                             }
-                            if (value.length < 6) {
-                              return 'Password needs to be at least 6 characters';
-                            }
+                            // if (value.length < 6) {
+                            //   return 'Password needs to be at least 6 characters';
+                            // }
                             return null;
                           },
                         ),

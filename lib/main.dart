@@ -13,9 +13,8 @@ import 'package:permission_handler/permission_handler.dart';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 void main() async {
- 
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
   var initializationSettingsIOS = IOSInitializationSettings(
       onDidReceiveLocalNotification:
@@ -31,10 +30,54 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  PermissionStatus _status;
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.notification)
+        .then(_updateStatus);
+  }
+
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      PermissionHandler()
+          .checkPermissionStatus(PermissionGroup.notification)
+          .then(_updateStatus);
+      print('resumed');
+    }
+    if (state == AppLifecycleState.detached) {
+      print('detached');
+    }
+    if (state == AppLifecycleState.inactive) {
+      print('inactive');
+    }
+    if (state == AppLifecycleState.paused) {
+      print('paused');
+    }
+  }
+
+  void _updateStatus(PermissionStatus status) {
+    if (status != _status) {
+      setState(() {
+        _status = status;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
@@ -44,23 +87,39 @@ class MyApp extends StatelessWidget {
           value: Task(),
         )
       ],
-          child: MaterialApp(
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          home: MainTasksScreen(),
-          supportedLocales: [
-            const Locale('en'),
-            const Locale('pl'),
-          ],
-          routes: {
-            MainTasksScreen.routeName: (ctx) => MainTasksScreen(),
-            EditTaskScreen.routeName: (ctx) => EditTaskScreen(),
-            TaskDetails.routeName:(ctx) => TaskDetails()
-          },
-          ),
+      child: MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        home: AuthScreen(),
+        supportedLocales: [
+          const Locale('en'),
+          const Locale('pl'),
+        ],
+        routes: {
+          MainTasksScreen.routeName: (ctx) => MainTasksScreen(),
+          EditTaskScreen.routeName: (ctx) => EditTaskScreen(),
+          TaskDetails.routeName: (ctx) => TaskDetails(_status)
+        },
+      ),
     );
   }
+
+  // void _onStatusRequested(Map<PermissionGroup, PermissionStatus> statuses) {
+  //   final status = statuses[PermissionGroup.notification];
+  //   if (status != PermissionStatus.granted) {
+  //     // On iOS if "deny" is pressed, open App Settings
+  //     PermissionHandler().openAppSettings();
+  //   } else {
+  //     _updateStatus(status);
+  //   }
+  // }
+
+  // void _askPermission() {
+  //   PermissionHandler().requestPermissions(
+  //       [PermissionGroup.notification]).then(_onStatusRequested);
+  // }
+
 }
