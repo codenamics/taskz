@@ -1,24 +1,44 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tazks/Animations/Waves.dart';
 import 'package:tazks/provider/Task.dart';
 import 'package:tazks/provider/Tasks.dart';
 
 class IsCompleted extends StatelessWidget {
   final Task task;
   IsCompleted(this.task);
+  var ran = Random().nextInt(125) + 85;
+  var speed = Random().nextInt(1.2.toInt()) + 0.9;
+
+
   @override
   Widget build(BuildContext context) {
+    print(ran);
     return GestureDetector(
       onTap: () {
-     Provider.of<Tasks>(context, listen: false).toogleStatus(task.id); 
+        Provider.of<Tasks>(context, listen: false).toogleStatus(task.id);
       },
       child: Container(
-          child: task.isCompleted
-              ? const Icon(
-                  Icons.done,
-                  color: Colors.white,
-                )
-              : null,
+          child: Stack(children: <Widget>[
+            task.isCompleted ? Center(child: Icon(Icons.check, color: Colors.white,)) : Container(),
+            
+// !task.isCompleted ? ClipRRect(
+//             borderRadius: BorderRadius.circular(50),
+//             child: Container(
+              
+//               child: Align(
+//                 alignment: Alignment.bottomCenter,
+//                 child: AnimatedWave(
+//                   height: ran.toDouble(),
+//                   speed: 1.2,
+//                   color: Colors.lightBlueAccent,
+//                 ),
+//               ),
+//             ),
+//           ): Container(),
+          ],),
           height: 50,
           width: 50,
           decoration: task.isCompleted
@@ -35,11 +55,12 @@ class IsCompleted extends StatelessWidget {
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(
-                      color: Color.fromRGBO(223, 223, 223, 0), width:0))
+                      color: Color.fromRGBO(223, 223, 223, 0), width: 0))
               : BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(
-                      color: Color.fromRGBO(223, 223, 223, 0.4), width: 1.5),)),
+                      color: Colors.blueGrey.withOpacity(0.2), width: 1.5),
+                )),
     );
   }
 }

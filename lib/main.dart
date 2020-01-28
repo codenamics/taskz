@@ -10,6 +10,8 @@ import 'package:tazks/screens/AuthScreen.dart';
 import 'package:tazks/screens/TaskDetails.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'Widgets/test.dart';
+
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 void main() async {
@@ -93,7 +95,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        home: AuthScreen(),
+        home:  MainTasksScreen(),
         supportedLocales: [
           const Locale('en'),
           const Locale('pl'),

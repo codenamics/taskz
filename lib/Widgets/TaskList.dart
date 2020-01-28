@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tazks/Animations/Waves.dart';
@@ -66,7 +68,54 @@ class _TaskListState extends State<TaskList> {
                       color: Color.fromRGBO(233, 240, 245, 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: TaskTile(tasksList[index])),
+                    child: tasksList[index].isCompleted
+                        ? Stack(
+                            children: <Widget>[
+                              Positioned.fill(
+                                child: AnimatedWave(
+                                  height: 78,
+                                  speed: 1,
+                                  color: Color.fromRGBO(11, 212, 100, 0.55),
+                                ),
+                              ),
+                              Positioned.fill(
+                                child: AnimatedWave(
+                                  height: 60,
+                                  speed: 1.3,
+                                  offset: pi,
+                                  color: Color.fromRGBO(11, 212, 100, 0.3),
+                                ),
+                              ),
+                              TaskTile(tasksList[index])
+                            ],
+                          )
+                        : Stack(
+                            children: <Widget>[
+                              Positioned.fill(
+                                child: AnimatedWave(
+                                    height: 80,
+                                    speed: 1,
+                                    offset: pi,
+                                    color: Colors.blue),
+                              ),
+                              Positioned.fill(
+                                child: AnimatedWave(
+                                    height: 50,
+                                    speed: 0.8,
+                                    offset: pi * 2,
+                                    color: Colors.lightBlueAccent),
+                              ),
+                              // Positioned.fill(
+
+                              //   child: AnimatedWave(
+                              //     height: 200,
+                              //     speed: 1,
+                              //     color: Colors.lightBlueAccent,
+                              //   ),
+                              // ),
+                              TaskTile(tasksList[index])
+                            ],
+                          )),
               )),
         ),
       ),

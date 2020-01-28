@@ -37,7 +37,7 @@ class CurvePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final black = Paint()..color = color.withAlpha(90);
+    final black = Paint()..color = color.withOpacity(0.1).withAlpha(20);
     final path = Path();
 
     final y1 = sin(value);
@@ -45,7 +45,7 @@ class CurvePainter extends CustomPainter {
     final y3 = sin(value + pi);
 
     final startPointY = size.height * (0.5 + 0.4 * y1);
-    final controlPointY = size.height * (0.5 + 0.4 * y2);
+    final controlPointY = size.height * (0.2 + 0.7 * y2);
     final endPointY = size.height * (0.5 + 0.4 * y3);
 
     path.moveTo(size.width * 0, startPointY);

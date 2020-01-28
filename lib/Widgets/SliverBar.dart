@@ -20,44 +20,40 @@ class SliverBar extends StatelessWidget {
     var completed = Provider.of<Tasks>(context).completed;
 
     return SliverAppBar(
-        backgroundColor: Color.fromRGBO(233, 240, 245, 1),
+      elevation: 2,
+      forceElevated: true,
+        backgroundColor: Colors.transparent,
         expandedHeight: 175.0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.white,
-                  spreadRadius: 1,
-                  blurRadius: 10,
-                  offset: Offset(0, 0)),
-            ],
-          ),
-          child: FlexibleSpaceBar(
-            background: Container(
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(233, 240, 245, 1)
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Stack(
+        flexibleSpace: FlexibleSpaceBar(
+          background: Container(
+            decoration: BoxDecoration(
+              
+              gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color.fromRGBO(36, 125, 229, 1), Color.fromRGBO(10, 67, 191, 1)]),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    child: Stack(
                         children: <Widget>[
                           onBottom(AnimatedWave(
-                            height: 110,
+                            height: 1000,
                             speed: 1.1,
-                            color: Colors.lightBlueAccent,
+                            color: Colors.lightBlueAccent.withOpacity(0.3),
                           )),
                           onBottom(AnimatedWave(
-                              height: 150,
+                              height: 1000,
                               speed: 0.85,
-                              offset: pi,
-                              color: Colors.blue)),
+                              offset: pi * 6,
+                              color: Colors.blue.withOpacity(0.2))),
                           onBottom(AnimatedWave(
-                              height: 50,
+                              height: 1000,
                               speed: 0.9,
-                              offset: pi * 2,
+                              offset: pi * 8,
                               color: Colors.blueGrey)),
                           Padding(
                             padding: const EdgeInsets.only(left: 15),
@@ -73,7 +69,7 @@ class SliverBar extends StatelessWidget {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 32,
-                                          color: Colors.black),
+                                          color: Colors.white),
                                     ),
                                     const Text(
                                       'DAMIAN',
@@ -81,12 +77,12 @@ class SliverBar extends StatelessWidget {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w300,
                                           fontSize: 32,
-                                          color: Colors.black54),
+                                          color: Colors.white),
                                     ),
                                   ],
                                 ),
                                 Expanded(
-                                                                  child: Container(
+                                          child: Container(
                                     
                                     decoration: BoxDecoration(
                                       color: Colors.transparent,
@@ -94,22 +90,22 @@ class SliverBar extends StatelessWidget {
                                     child: Center(
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                    MainAxisAlignment.center,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.end,
+                    CrossAxisAlignment.end,
                                         children: <Widget>[
                                           Text(
-                                            '${completed.length.toString()}/${tasksList.length.toString()}',
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 40,
-                                                color: Colors.black),
+                    '${completed.length.toString()}/${tasksList.length.toString()}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 40,
+                        color: Colors.white),
                                           ),
                                           const Text('Tasks',
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 20,
-                                                  color: Colors.black54))
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                          color: Colors.white))
                                         ],
                                       ),
                                     ),
@@ -120,10 +116,9 @@ class SliverBar extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ));
