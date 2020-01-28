@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tazks/Animations/Waves.dart';
 import 'package:tazks/Widgets/TaskTile.dart';
 import 'package:tazks/helpers/NotificationHelpers.dart';
 import 'package:tazks/provider/Tasks.dart';
@@ -12,6 +13,12 @@ class TaskList extends StatefulWidget {
 }
 
 class _TaskListState extends State<TaskList> {
+  Widget onBottom(Widget child) => Positioned.fill(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: child,
+        ),
+      );
   @override
   Widget build(BuildContext context) {
     final tasksList = Provider.of<Tasks>(context).tasks;
@@ -41,10 +48,22 @@ class _TaskListState extends State<TaskList> {
               },
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 11),
                 child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.white,
+                            spreadRadius: 3,
+                            blurRadius: 4,
+                            offset: Offset(-4, -4)),
+                        BoxShadow(
+                            color: Colors.blueGrey.withOpacity(0.3),
+                            spreadRadius: 3,
+                            blurRadius: 4,
+                            offset: Offset(3, 3)),
+                      ],
+                      color: Color.fromRGBO(233, 240, 245, 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TaskTile(tasksList[index])),

@@ -41,7 +41,7 @@ class Tasks with ChangeNotifier {
         id: Random().nextInt(200).toString(),
         title: task.title,
         description: task.description);
-    _tasks.add(taskItem);
+    _tasks.insert(0,taskItem);
     notifyListeners();
   }
 
