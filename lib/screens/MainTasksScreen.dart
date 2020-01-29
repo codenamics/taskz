@@ -16,7 +16,7 @@ class _MainTasksScreenState extends State<MainTasksScreen> {
   Widget build(BuildContext context) {
   
     return Scaffold(
-      backgroundColor: Color.fromRGBO(233, 240, 245, 1),
+      backgroundColor: Colors.white,
         floatingActionButton: GestureDetector(
           onTap: () {
             Navigator.of(context).pushNamed(EditTaskScreen.routeName);

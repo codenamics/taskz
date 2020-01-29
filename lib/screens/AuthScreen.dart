@@ -74,6 +74,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         TextFormField(
                           onSaved: (input) => _email = input,
                           decoration: InputDecoration(
+                           border: InputBorder.none,
+                            filled: true,
+                            fillColor: Color.fromRGBO(233, 240, 245, 1),
                               labelStyle: const TextStyle(fontSize: 18),
                               labelText: 'Email'),
                           textInputAction: TextInputAction.next,
@@ -90,6 +93,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         TextFormField(
                           onSaved: (input) => _password = input,
                           decoration: InputDecoration(
+                             border: InputBorder.none,
+                            filled: true,
+                            fillColor: Color.fromRGBO(233, 240, 245, 1),
                               labelStyle: const TextStyle(fontSize: 18),
                               labelText: 'Password'),
                           textInputAction: TextInputAction.next,

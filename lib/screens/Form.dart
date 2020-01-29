@@ -127,7 +127,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                             borderSide:
                                 BorderSide(color: Colors.grey[400], width: 1.0),
                           ),
-                          fillColor: Color.fromRGBO(221, 224, 227, 0.4),
+                          fillColor: Color.fromRGBO(233, 240, 245, 1),
                           labelText: 'Title'),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -155,7 +155,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                             borderSide:
                                 BorderSide(color: Colors.grey[400], width: 1.0),
                           ),
-                          fillColor: Color.fromRGBO(221, 224, 227, 0.4),
+                          fillColor: Color.fromRGBO(233, 240, 245, 1),
                           labelText: 'Description'),
                       maxLines: 4,
                       keyboardType: TextInputType.multiline,

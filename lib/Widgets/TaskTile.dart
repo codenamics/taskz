@@ -12,18 +12,20 @@ class TaskTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(
-        title: Text(tasksList.title),
+        title: Text(tasksList.title, style: TextStyle(fontSize: 17),),
         subtitle: Text(
+          
           tasksList.description,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           softWrap: false,
+          style: TextStyle(fontSize: 14),
         ),
         trailing: tasksList.reminderDate != null
             ? Icon(
                 Icons.alarm,
                 color: Colors.blueGrey,
-                size: 32,
+                size: 34,
               )
             : Icon(
                 Icons.alarm,

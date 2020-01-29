@@ -313,13 +313,13 @@ class _TaskDetailsState extends State<TaskDetails> {
                     ),
                     Container(
                         padding: const EdgeInsets.all(15),
-                        color: Color.fromRGBO(221, 224, 227, 0.4),
+                        color:Color.fromRGBO(233, 240, 245, 1),
                         child: Text(task.title,
                             style: const TextStyle(fontSize: 35))),
-                    const Divider(
-                      thickness: 3,
+                     Divider(
+                      thickness: 2,
                       height: 40,
-                      color: Colors.lightBlueAccent,
+                      color: Colors.lightBlueAccent.withAlpha(80),
                     ),
                     const Text("Description"),
                     const SizedBox(
@@ -327,13 +327,13 @@ class _TaskDetailsState extends State<TaskDetails> {
                     ),
                     Container(
                         padding: const EdgeInsets.all(15),
-                        color: Color.fromRGBO(221, 224, 227, 0.4),
+                        color: Color.fromRGBO(233, 240, 245, 1),
                         child: Text(task.description,
                             style: const TextStyle(fontSize: 18))),
-                    const Divider(
-                      thickness: 3,
+                     Divider(
+                      thickness: 2,
                       height: 40,
-                      color: Colors.lightBlueAccent,
+                      color: Colors.lightBlueAccent.withAlpha(80),
                     ),
                     _remindDate != null
                         ? Column(

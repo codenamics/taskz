@@ -50,72 +50,72 @@ class _TaskListState extends State<TaskList> {
               },
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 11),
+                    const EdgeInsets.symmetric( vertical: 10),
                 child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.white,
-                            spreadRadius: 3,
-                            blurRadius: 4,
-                            offset: Offset(-4, -4)),
-                        BoxShadow(
-                            color: Colors.blueGrey.withOpacity(0.3),
-                            spreadRadius: 3,
-                            blurRadius: 4,
-                            offset: Offset(3, 3)),
-                      ],
-                      color: Color.fromRGBO(233, 240, 245, 1),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: tasksList[index].isCompleted
-                        ? Stack(
-                            children: <Widget>[
-                              Positioned.fill(
-                                child: AnimatedWave(
-                                  height: 78,
-                                  speed: 1,
-                                  color: Color.fromRGBO(11, 212, 100, 0.55),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          // BoxShadow(
+                          //     color: Colors.white,
+                          //     spreadRadius: 3,
+                          //     blurRadius: 4,
+                          //     offset: Offset(-4, -4)),
+                          BoxShadow(
+                              color: Colors.blueGrey.withOpacity(0.2),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: Offset(0, 0)),
+                        ],
+                        color: Colors.white,
+            
+                      ),
+                      child: tasksList[index].isCompleted
+                          ? Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                child: AnimatedWave(
+                  height: 78,
+                  speed: 1,
+                  color: Color.fromRGBO(11, 212, 100, 0.55).withAlpha(15),
+                ),
                                 ),
-                              ),
-                              Positioned.fill(
-                                child: AnimatedWave(
-                                  height: 60,
-                                  speed: 1.3,
-                                  offset: pi,
-                                  color: Color.fromRGBO(11, 212, 100, 0.3),
+                                Positioned.fill(
+                child: AnimatedWave(
+                  height: 60,
+                  speed: 1.3,
+                  offset: pi,
+                  color: Color.fromRGBO(11, 212, 100, 0.3).withAlpha(15),
+                ),
                                 ),
-                              ),
-                              TaskTile(tasksList[index])
-                            ],
-                          )
-                        : Stack(
-                            children: <Widget>[
-                              Positioned.fill(
-                                child: AnimatedWave(
-                                    height: 80,
-                                    speed: 1,
-                                    offset: pi,
-                                    color: Colors.blue),
-                              ),
-                              Positioned.fill(
-                                child: AnimatedWave(
-                                    height: 50,
-                                    speed: 0.8,
-                                    offset: pi * 2,
-                                    color: Colors.lightBlueAccent),
-                              ),
-                              // Positioned.fill(
+                                TaskTile(tasksList[index])
+                              ],
+                            )
+                          : Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                child: AnimatedWave(
+                    height: 80,
+                    speed: 1,
+                    offset: pi,
+                    color: Colors.blue.withAlpha(15)),
+                                ),
+                                Positioned.fill(
+                child: AnimatedWave(
+                    height: 50,
+                    speed: 0.8,
+                    offset: pi * 2,
+                    color: Colors.lightBlueAccent.withAlpha(15)),
+                                ),
+                                // Positioned.fill(
 
-                              //   child: AnimatedWave(
-                              //     height: 200,
-                              //     speed: 1,
-                              //     color: Colors.lightBlueAccent,
-                              //   ),
-                              // ),
-                              TaskTile(tasksList[index])
-                            ],
-                          )),
+                                //   child: AnimatedWave(
+                                //     height: 200,
+                                //     speed: 1,
+                                //     color: Colors.lightBlueAccent,
+                                //   ),
+                                // ),
+                                TaskTile(tasksList[index])
+                              ],
+                            )),
               )),
         ),
       ),
