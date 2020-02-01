@@ -23,8 +23,9 @@ class _TaskListState extends State<TaskList> {
       );
   @override
   Widget build(BuildContext context) {
+    
     final tasksList = Provider.of<Tasks>(context).tasks;
-    return ListView.builder(
+    return tasksList.length != 0 ?  ListView.builder(
       padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       itemCount: tasksList.length,
       itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
@@ -119,6 +120,6 @@ class _TaskListState extends State<TaskList> {
               )),
         ),
       ),
-    );
+    ) : Center(child: CircularProgressIndicator());
   }
 }

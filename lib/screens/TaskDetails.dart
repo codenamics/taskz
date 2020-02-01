@@ -28,9 +28,8 @@ class _TaskDetailsState extends State<TaskDetails> {
   PermissionStatus permission;
   @override
   // void initState() {
-    
+
   //     _isLoading = true;
-   
 
   //   PermissionHandler()
   //       .checkPermissionStatus(PermissionGroup.notification)
@@ -82,7 +81,6 @@ class _TaskDetailsState extends State<TaskDetails> {
   }
 
   Widget _notifications(permission) {
-    
     if (permission == PermissionStatus.granted && permission != null) {
       return GestureDetector(
         onTap: () {
@@ -150,118 +148,76 @@ class _TaskDetailsState extends State<TaskDetails> {
   Widget build(BuildContext context) {
     print(widget.status);
     return
-    // return _isLoading
-    //     ? Scaffold(
-    //         body: Center(
-    //           child: CircularProgressIndicator(),
-    //         ),
-    //       ):
-         Scaffold(
-            floatingActionButton: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed(EditTaskScreen.routeName,
-                        arguments: _taskId);
-                  },
-                  child: Container(
-                      child: const Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ),
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color.fromRGBO(182, 226, 246, 1),
-                                spreadRadius: 2,
-                                blurRadius: 15,
-                                offset: Offset(0, 0)),
-                          ],
-                          color: Colors.lightBlueAccent.withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(
-                              color: Color.fromRGBO(223, 223, 223, 0),
-                              width: 0))),
+        // return _isLoading
+        //     ? Scaffold(
+        //         body: Center(
+        //           child: CircularProgressIndicator(),
+        //         ),
+        //       ):
+        Scaffold(
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(EditTaskScreen.routeName, arguments: _taskId);
+            },
+            child: Container(
+                child: const Icon(
+                  Icons.edit,
+                  color: Colors.white,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-               widget.status == PermissionStatus.granted ? GestureDetector(
-        onTap: () {
-          DatePicker.showDateTimePicker(context,
-              showTitleActions: true,
-              minTime: DateTime(2018),
-              maxTime: DateTime(2222),
-              onChanged: (date) {}, onConfirm: (date) async {
-            _notifyId = Random().nextInt(9999999);
-            NotificationHelper.scheduleNotificationReminder(
-                flutterLocalNotificationsPlugin, date, _notifyId, task);
-            Task _task = Task(
-                id: _taskId,
-                title: task.title,
-                description: task.description,
-                isCompleted: task.isCompleted,
-                reminderDate: date,
-                notifyId: _notifyId);
-
-            Provider.of<Tasks>(context, listen: false)
-                .updateTask(_taskId, _task);
-            setState(() {
-              _remindDate = date;
-            });
-          }, currentTime: DateTime.now(), locale: LocaleType.pl);
-        },
-        child: Container(
-            child: const Icon(
-              Icons.alarm,
-              color: Colors.white,
-            ),
-            height: 60,
-            width: 60,
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.4),
-                      spreadRadius: 2,
-                      blurRadius: 15,
-                      offset: Offset(0, 0)),
-                ],
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(50),
-                border: Border.all(
-                    color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
-      ) : Container(
-          child: const Icon(
-            Icons.alarm_off,
-            color: Colors.white,
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color.fromRGBO(182, 226, 246, 1),
+                          spreadRadius: 2,
+                          blurRadius: 15,
+                          offset: Offset(0, 0)),
+                    ],
+                    color: Colors.lightBlueAccent.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(
+                        color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
           ),
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-              color: Colors.grey[400],
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(
-                  color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    Provider.of<Tasks>(context, listen: false)
-                        .removeTask(_taskId);
+          const SizedBox(
+            height: 20,
+          ),
+          widget.status == PermissionStatus.granted
+              ? GestureDetector(
+                  onTap: () {
+                    DatePicker.showDateTimePicker(context,
+                        showTitleActions: true,
+                        minTime: DateTime(2018),
+                        maxTime: DateTime(2222),
+                        onChanged: (date) {}, onConfirm: (date) async {
+                      _notifyId = Random().nextInt(9999999);
+                      NotificationHelper.scheduleNotificationReminder(
+                          flutterLocalNotificationsPlugin,
+                          date,
+                          _notifyId,
+                          task);
+                      Task _task = Task(
+                          id: _taskId,
+                          title: task.title,
+                          description: task.description,
+                          isCompleted: task.isCompleted,
+                          reminderDate: date,
+                          notifyId: _notifyId);
 
-                    if (task.notifyId != null) {
-                      await NotificationHelper.removeNotification(
-                          flutterLocalNotificationsPlugin, task.notifyId);
-                    }
-                    Navigator.of(context).pop();
+                      Provider.of<Tasks>(context, listen: false)
+                          .updateTask(_taskId, _task);
+                      setState(() {
+                        _remindDate = date;
+                      });
+                    }, currentTime: DateTime.now(), locale: LocaleType.pl);
                   },
                   child: Container(
                       child: const Icon(
-                        Icons.delete,
+                        Icons.alarm,
                         color: Colors.white,
                       ),
                       height: 60,
@@ -269,94 +225,140 @@ class _TaskDetailsState extends State<TaskDetails> {
                       decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
-                                color: Colors.redAccent.withOpacity(0.5),
+                                color: Colors.black.withOpacity(0.4),
                                 spreadRadius: 2,
                                 blurRadius: 15,
                                 offset: Offset(0, 0)),
                           ],
-                          color: Colors.redAccent.withOpacity(0.9),
+                          color: Colors.black,
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(
                               color: Color.fromRGBO(223, 223, 223, 0),
                               width: 0))),
+                )
+              : Container(
+                  child: const Icon(
+                    Icons.alarm_off,
+                    color: Colors.white,
+                  ),
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[400],
+                      borderRadius: BorderRadius.circular(50),
+                      border: Border.all(
+                          color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
+          const SizedBox(
+            height: 20,
+          ),
+          GestureDetector(
+            onTap: () async {
+              Provider.of<Tasks>(context, listen: false)
+                  .removeTask(_taskId)
+                  .then((_) {
+              
+                Navigator.of(context).pop();
+              });
+                if (task.notifyId != null) {      await NotificationHelper.removeNotification(
+                  flutterLocalNotificationsPlugin, task.notifyId);}
+        
+            },
+            child: Container(
+                child: const Icon(
+                  Icons.delete,
+                  color: Colors.white,
                 ),
-              ],
-            ),
-            appBar: AppBar(
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(
-                  Icons.chevron_left,
-                  color: Colors.black,
-                ),
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.redAccent.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 15,
+                          offset: Offset(0, 0)),
+                    ],
+                    color: Colors.redAccent.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(
+                        color: Color.fromRGBO(223, 223, 223, 0), width: 0))),
+          ),
+        ],
+      ),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
+            Icons.chevron_left,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        title: const Text(
+          'Task Details',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              const SizedBox(
+                height: 35,
               ),
-              backgroundColor: Colors.white,
-              title: const Text(
-                'Task Details',
-                style: TextStyle(color: Colors.black),
+              const Text("Title"),
+              const SizedBox(
+                height: 5,
               ),
-            ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    const SizedBox(
-                      height: 35,
-                    ),
-                    const Text("Title"),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                        padding: const EdgeInsets.all(15),
-                        color:Color.fromRGBO(233, 240, 245, 1),
-                        child: Text(task.title,
-                            style: const TextStyle(fontSize: 35))),
-                     Divider(
-                      thickness: 2,
-                      height: 40,
-                      color: Colors.lightBlueAccent.withAlpha(80),
-                    ),
-                    const Text("Description"),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                        padding: const EdgeInsets.all(15),
-                        color: Color.fromRGBO(233, 240, 245, 1),
-                        child: Text(task.description,
-                            style: const TextStyle(fontSize: 18))),
-                     Divider(
-                      thickness: 2,
-                      height: 40,
-                      color: Colors.lightBlueAccent.withAlpha(80),
-                    ),
-                    _remindDate != null
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              const Text("Remind me at:"),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                  padding: const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                      color:
-                                          Color.fromRGBO(221, 224, 227, 0.4)),
-                                  child: Text(DateFormat('dd/MM/yyy kk:mm')
-                                      .format(_remindDate))),
-                            ],
-                          )
-                        : _notifyDateRender(task.reminderDate)
-                  ],
-                ),
+              Container(
+                  padding: const EdgeInsets.all(15),
+                  color: Color.fromRGBO(233, 240, 245, 1),
+                  child:
+                      Text(task.title, style: const TextStyle(fontSize: 35))),
+              Divider(
+                thickness: 2,
+                height: 40,
+                color: Colors.lightBlueAccent.withAlpha(80),
               ),
-            ),
-          );
+              const Text("Description"),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(15),
+                  color: Color.fromRGBO(233, 240, 245, 1),
+                  child: Text(task.description,
+                      style: const TextStyle(fontSize: 18))),
+              Divider(
+                thickness: 2,
+                height: 40,
+                color: Colors.lightBlueAccent.withAlpha(80),
+              ),
+              _remindDate != null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        const Text("Remind me at:"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(221, 224, 227, 0.4)),
+                            child: Text(DateFormat('dd/MM/yyy kk:mm')
+                                .format(_remindDate))),
+                      ],
+                    )
+                  : _notifyDateRender(task.reminderDate)
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

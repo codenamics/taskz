@@ -6,25 +6,38 @@ import 'package:tazks/Animations/Waves.dart';
 import 'package:tazks/provider/Task.dart';
 import 'package:tazks/provider/Tasks.dart';
 
-class IsCompleted extends StatelessWidget {
+class IsCompleted extends StatefulWidget {
   final Task task;
   IsCompleted(this.task);
-  var ran = Random().nextInt(125) + 85;
-  var speed = Random().nextInt(1.2.toInt()) + 0.9;
-
 
   @override
+  _IsCompletedState createState() => _IsCompletedState();
+}
+
+class _IsCompletedState extends State<IsCompleted> {
+  var ran = Random().nextInt(125) + 85;
+  bool _isCompleted;
+  var speed = Random().nextInt(1.2.toInt()) + 0.9;
+  @override
+  void initState() {
+    _isCompleted = widget.task.isCompleted;
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    print(ran);
+
     return GestureDetector(
       onTap: () {
-        Provider.of<Tasks>(context, listen: false).toogleStatus(task.id);
+        setState(() {
+          _isCompleted = !_isCompleted;
+        });
+        Provider.of<Tasks>(context, listen: false).toogleStatus(widget.task.id);
       },
       child: Container(
           child: Stack(children: <Widget>[
-            task.isCompleted ? Center(child: Icon(Icons.check, color: Colors.white,)) : Container(),
+            _isCompleted ? Center(child: Icon(Icons.check, color: Colors.white,)) : Container(),
             
-// !task.isCompleted ? ClipRRect(
+// !task._isCompletedpleted ? ClipRRect(
 //             borderRadius: BorderRadius.circular(50),
 //             child: Container(
               
@@ -41,7 +54,7 @@ class IsCompleted extends StatelessWidget {
           ],),
           height: 50,
           width: 50,
-          decoration: task.isCompleted
+          decoration: _isCompleted
               ? BoxDecoration(
                   boxShadow: [
                       BoxShadow(
@@ -50,7 +63,7 @@ class IsCompleted extends StatelessWidget {
                           blurRadius: 16,
                           offset: Offset(0, 0)),
                     ],
-                  color: task.isCompleted
+                  color: _isCompleted
                       ? Color.fromRGBO(11, 212, 100, 0.55)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(50),

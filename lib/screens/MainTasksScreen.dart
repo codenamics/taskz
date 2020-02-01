@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tazks/Widgets/SliverBar.dart';
 import 'package:tazks/Widgets/TaskList.dart';
+import 'package:tazks/provider/Tasks.dart';
 import 'package:tazks/screens/Form.dart';
-
+import 'package:provider/provider.dart';
 class MainTasksScreen extends StatefulWidget {
   static const routeName = '/main-tasks-screen';
 
@@ -11,9 +15,17 @@ class MainTasksScreen extends StatefulWidget {
 }
 
 class _MainTasksScreenState extends State<MainTasksScreen> {
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((_){
+  Provider.of<Tasks>(context, listen: false).fetchTodos();
+    });
   
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    
   
     return Scaffold(
       backgroundColor: Colors.white,
