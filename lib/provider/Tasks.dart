@@ -121,9 +121,9 @@ class Tasks with ChangeNotifier {
       try {
         await http.patch(url,
             body: json.encode({
-              'isCompleted': !_tasks[taskIndex].isCompleted,
+              'isCompleted': _tasks[taskIndex].isCompleted,
             }));
-        _tasks[taskIndex].isCompleted = !_tasks[taskIndex].isCompleted;
+        // _tasks[taskIndex].isCompleted = !_tasks[taskIndex].isCompleted;
         notifyListeners();
       } catch (e) {
         throw e;

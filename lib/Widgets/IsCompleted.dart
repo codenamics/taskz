@@ -14,6 +14,7 @@ class IsCompleted extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+         Provider.of<Task>(context, listen: false).toggleStatus();
         Provider.of<Tasks>(context, listen: false).toogleStatus(task.id);
       },
       child: Container(
