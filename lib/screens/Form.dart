@@ -17,22 +17,22 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   String buttonText;
   DateTime dateTime;
   var _editedTask =
-      Task(id: null, title: '', description: '', isCompleted: false);
+      Task( title: '', description: '', isCompleted: false);
   var _initValues = {'title': '', 'description': ''};
   var _isInit = true;
   var _isLoading = false;
 
   @override
   void didChangeDependencies() {
-    if (_isInit) {
-      final taskId = ModalRoute.of(context).settings.arguments as String;
 
+      final taskId = ModalRoute.of(context).settings.arguments as String;
+    
       if (taskId != null) {
          title = 'Edit Task';
          buttonText = 'Save task';
         _editedTask =
             Provider.of<Tasks>(context, listen: false).findById(taskId);
-   
+  
 
         _initValues = {
           'title': _editedTask.title,
@@ -43,8 +43,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         buttonText = 'Add Task';
       }
 
-    }
-    _isInit = false;
+  
     super.didChangeDependencies();
   }
 
@@ -59,7 +58,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     });
 
     if (_editedTask.id != null) {
-   
+  
       Provider.of<Tasks>(context, listen: false)
           .updateTask(_editedTask.id, _editedTask);
       Navigator.of(context).pushNamed(MainTasksScreen.routeName);

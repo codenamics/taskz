@@ -18,6 +18,7 @@ class Tasks with ChangeNotifier {
   }
 
   Task findById(String id) {
+    
     return _tasks.firstWhere((task) => task.id == id);
   }
 
@@ -35,7 +36,12 @@ class Tasks with ChangeNotifier {
           id: taskId,
           title: taskData['title'],
           description: taskData['description'],
-          isCompleted: taskData['isCompleted']));
+          isCompleted: taskData['isCompleted'],
+          notifyId: taskData['notifyId'],
+          reminderDate: taskData['reminderDate'] != null ? DateTime.parse(taskData['reminderDate']) : null
+          
+          
+          ));
     });
     _tasks = loadedTasks;
     notifyListeners();
@@ -43,21 +49,18 @@ class Tasks with ChangeNotifier {
 
   Future addTask(Task task) async {
     var url = 'https://draganddrop-c65b4.firebaseio.com/todos.json';
-    await http.post(url,
+   var res = await http.post(url,
         body: json.encode({
           'title': task.title,
           'description': task.description,
           'isCompleted': false
         }));
-    final taskItem = Task(
-        id: Random().nextInt(200).toString(),
-        title: task.title,
-        description: task.description);
-    _tasks.add(taskItem);
+ 
+   await fetchTodos();
     notifyListeners();
   }
 
-  void updateTask(String id, Task newTask) async {
+ Future <void> updateTask(String id, Task newTask) async {
     var url = 'https://draganddrop-c65b4.firebaseio.com/todos/$id.json';
     final taskIndex = _tasks.indexWhere((task) => task.id == id);
     if (taskIndex >= 0) {
@@ -77,6 +80,32 @@ class Tasks with ChangeNotifier {
     }
   }
 
+ Future <void> updatedReminder(String id, Task newTask) async {
+   
+    var url = 'https://draganddrop-c65b4.firebaseio.com/todos/$id.json';
+    final taskIndex = _tasks.indexWhere((task) => task.id == id);
+    if (taskIndex >= 0) {
+      try {
+        await http.put(url,
+            body: json.encode({
+          
+              'title': newTask.title,
+              'description': newTask.description,
+              'isCompleted': newTask.isCompleted,
+              'reminderDate': newTask.reminderDate.toString(),
+              'notifyId': newTask.notifyId,
+            }));
+        _tasks[taskIndex] = newTask;
+        notifyListeners();
+      } catch (e) {
+        throw e;
+      }
+    } else {
+      print('...');
+    }
+  }
+
+
   Future<void> removeTask(String id) async {
     var url = 'https://draganddrop-c65b4.firebaseio.com/todos/$id.json';
     await http.delete(url);
@@ -84,17 +113,17 @@ class Tasks with ChangeNotifier {
     notifyListeners();
   }
 
-  void toogleStatus(String id) async {
+ Future <void> toogleStatus(String id) async {
     var url = 'https://draganddrop-c65b4.firebaseio.com/todos/$id.json';
     final taskIndex = _tasks.indexWhere((task) => task.id == id);
-
+    print(taskIndex);
     if (taskIndex >= 0) {
       try {
         await http.patch(url,
             body: json.encode({
               'isCompleted': !_tasks[taskIndex].isCompleted,
             }));
-        // _tasks[taskIndex].isCompleted = !_tasks[taskIndex].isCompleted;
+        _tasks[taskIndex].isCompleted = !_tasks[taskIndex].isCompleted;
         notifyListeners();
       } catch (e) {
         throw e;

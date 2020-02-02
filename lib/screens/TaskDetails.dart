@@ -41,18 +41,22 @@ class _TaskDetailsState extends State<TaskDetails> {
   //   });
   //   super.initState();
   // }
-
+  
   void didChangeDependencies() async {
-    if (_isInit) {
-      _taskId = ModalRoute.of(context).settings.arguments as String;
+if (_isInit) {
+  _taskId = ModalRoute.of(context).settings.arguments as String;
 
       task = Provider.of<Tasks>(context, listen: false).findById(_taskId);
-    }
-    _isInit = false;
+ 
+}
+      
+  _isInit = false;
     super.didChangeDependencies();
   }
 
   Widget _notifyDateRender(reminderDate) {
+    // var parsed = DateTime.parse(reminderDate);
+ 
     if (reminderDate != null) {
       if (reminderDate.difference(DateTime.now()).inSeconds >= 0) {
         String formattedDate =
@@ -146,7 +150,7 @@ class _TaskDetailsState extends State<TaskDetails> {
   }
 
   Widget build(BuildContext context) {
-    print(widget.status);
+   
     return
         // return _isLoading
         //     ? Scaffold(
@@ -160,6 +164,7 @@ class _TaskDetailsState extends State<TaskDetails> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
+            
               Navigator.of(context)
                   .pushNamed(EditTaskScreen.routeName, arguments: _taskId);
             },
@@ -207,9 +212,9 @@ class _TaskDetailsState extends State<TaskDetails> {
                           isCompleted: task.isCompleted,
                           reminderDate: date,
                           notifyId: _notifyId);
-
+                   
                       Provider.of<Tasks>(context, listen: false)
-                          .updateTask(_taskId, _task);
+                          .updatedReminder(_taskId, _task);
                       setState(() {
                         _remindDate = date;
                       });

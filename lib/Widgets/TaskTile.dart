@@ -9,28 +9,44 @@ class TaskTile extends StatelessWidget {
   TaskTile(this.tasksList);
   @override
   Widget build(BuildContext context) {
+   
+    Widget _alarm() {
+      if (tasksList.reminderDate != null) {
+        if (tasksList.reminderDate.difference(DateTime.now()).inSeconds >= 0) {
+          
+          return Icon(
+            Icons.alarm,
+            color: Colors.blueGrey,
+            size: 34,
+          );
+        } else {
+          Icon(
+            Icons.alarm,
+            color: Colors.transparent,
+          );
+        }
+      }
+      return Icon(
+            Icons.alarm,
+            color: Colors.transparent,
+          );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(
-        title: Text(tasksList.title, style: TextStyle(fontSize: 17),),
+        title: Text(
+          tasksList.title,
+          style: TextStyle(fontSize: 17),
+        ),
         subtitle: Text(
-          
           tasksList.description,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           softWrap: false,
           style: TextStyle(fontSize: 14),
         ),
-        trailing: tasksList.reminderDate != null
-            ? Icon(
-                Icons.alarm,
-                color: Colors.blueGrey,
-                size: 34,
-              )
-            : Icon(
-                Icons.alarm,
-                color: Colors.transparent,
-              ),
+        trailing: _alarm(),
         leading:
             Consumer<Task>(builder: (ctx, task, child) => IsCompleted(task)),
       ),

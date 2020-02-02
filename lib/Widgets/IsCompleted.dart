@@ -6,41 +6,31 @@ import 'package:tazks/Animations/Waves.dart';
 import 'package:tazks/provider/Task.dart';
 import 'package:tazks/provider/Tasks.dart';
 
-class IsCompleted extends StatefulWidget {
+class IsCompleted extends StatelessWidget {
   final Task task;
   IsCompleted(this.task);
 
   @override
-  _IsCompletedState createState() => _IsCompletedState();
-}
-
-class _IsCompletedState extends State<IsCompleted> {
-  var ran = Random().nextInt(125) + 85;
-  bool _isCompleted;
-  var speed = Random().nextInt(1.2.toInt()) + 0.9;
-  @override
-  void initState() {
-    _isCompleted = widget.task.isCompleted;
-    super.initState();
-  }
-  @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _isCompleted = !_isCompleted;
-        });
-        Provider.of<Tasks>(context, listen: false).toogleStatus(widget.task.id);
+        Provider.of<Tasks>(context, listen: false).toogleStatus(task.id);
       },
       child: Container(
-          child: Stack(children: <Widget>[
-            _isCompleted ? Center(child: Icon(Icons.check, color: Colors.white,)) : Container(),
-            
-// !task._isCompletedpleted ? ClipRRect(
+          child: Stack(
+            children: <Widget>[
+              task.isCompleted
+                  ? Center(
+                      child: Icon(
+                      Icons.check,
+                      color: Colors.white,
+                    ))
+                  : Container(),
+
+// !task.task.isCompleted pleted ? ClipRRect(
 //             borderRadius: BorderRadius.circular(50),
 //             child: Container(
-              
+
 //               child: Align(
 //                 alignment: Alignment.bottomCenter,
 //                 child: AnimatedWave(
@@ -51,10 +41,11 @@ class _IsCompletedState extends State<IsCompleted> {
 //               ),
 //             ),
 //           ): Container(),
-          ],),
+            ],
+          ),
           height: 50,
           width: 50,
-          decoration: _isCompleted
+          decoration: task.isCompleted
               ? BoxDecoration(
                   boxShadow: [
                       BoxShadow(
@@ -63,7 +54,7 @@ class _IsCompletedState extends State<IsCompleted> {
                           blurRadius: 16,
                           offset: Offset(0, 0)),
                     ],
-                  color: _isCompleted
+                  color: task.isCompleted
                       ? Color.fromRGBO(11, 212, 100, 0.55)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(50),

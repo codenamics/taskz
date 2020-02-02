@@ -22,8 +22,8 @@ class Task with ChangeNotifier {
     notifyListeners();
   }
 
-  // void toggleStatus() {
-  //   isCompleted = !isCompleted;
-  //   notifyListeners();
-  // }
+  void toggleStatus() {
+    isCompleted = !isCompleted;
+    notifyListeners();
+  }
 }
