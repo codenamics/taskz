@@ -18,12 +18,9 @@ class Task with ChangeNotifier {
     
   });
 
-  void setReminder(bool newValue) {
-    notifyListeners();
-  }
 
   void toggleStatus() {
     isCompleted = !isCompleted;
-    notifyListeners();
+   
   }
 }

@@ -12,9 +12,11 @@ class IsCompleted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
          Provider.of<Task>(context, listen: false).toggleStatus();
+        //  Provider.of<Tasks>(context, listen: false).renotify();
         Provider.of<Tasks>(context, listen: false).toogleStatus(task.id);
       },
       child: Container(

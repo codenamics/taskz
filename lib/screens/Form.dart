@@ -61,7 +61,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   
       Provider.of<Tasks>(context, listen: false)
           .updateTask(_editedTask.id, _editedTask);
-      Navigator.of(context).pushNamed(MainTasksScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(MainTasksScreen.routeName);
     } else {
       try {
         Provider.of<Tasks>(context, listen: false).addTask(_editedTask);

@@ -26,7 +26,7 @@ class _MainTasksScreenState extends State<MainTasksScreen> {
   @override
   Widget build(BuildContext context) {
     
-  
+  print('main');
     return Scaffold(
       backgroundColor: Colors.white,
         floatingActionButton: GestureDetector(
