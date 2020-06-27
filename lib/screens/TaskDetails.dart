@@ -12,7 +12,7 @@ import '../main.dart';
 
 class TaskDetails extends StatefulWidget {
   static final String routeName = '/task-details';
-  PermissionStatus status;
+ final PermissionStatus status;
   TaskDetails(this.status);
   @override
   _TaskDetailsState createState() => _TaskDetailsState();
@@ -27,20 +27,20 @@ class _TaskDetailsState extends State<TaskDetails> {
   DateTime _remindDate;
   PermissionStatus permission;
   @override
-  // void initState() {
+  void initState() {
 
-  //     _isLoading = true;
+      _isLoading = true;
 
-  //   PermissionHandler()
-  //       .checkPermissionStatus(PermissionGroup.notification)
-  //       .then((res) {
-  //     setState(() {
-  //       permission = res;
-  //       _isLoading = false;
-  //     });
-  //   });
-  //   super.initState();
-  // }
+    PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.notification)
+        .then((res) {
+      setState(() {
+        permission = res;
+        _isLoading = false;
+      });
+    });
+    super.initState();
+  }
   
   void didChangeDependencies() async {
 if (_isInit) {
@@ -151,13 +151,13 @@ if (_isInit) {
 
   Widget build(BuildContext context) {
    
-    return
-        // return _isLoading
-        //     ? Scaffold(
-        //         body: Center(
-        //           child: CircularProgressIndicator(),
-        //         ),
-        //       ):
+    
+        return _isLoading
+            ? Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ):
         Scaffold(
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

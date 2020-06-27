@@ -42,9 +42,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // PermissionHandler()
-    //     .checkPermissionStatus(PermissionGroup.notification)
-    //     .then(_updateStatus);
+    PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.notification)
+        .then(_updateStatus);
   }
 
   void dispose() {
@@ -54,9 +54,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      // PermissionHandler()
-      //     .checkPermissionStatus(PermissionGroup.notification)
-      //     .then(_updateStatus);
+      PermissionHandler()
+          .checkPermissionStatus(PermissionGroup.notification)
+          .then(_updateStatus);
       print('resumed');
     }
     if (state == AppLifecycleState.detached) {
@@ -109,19 +109,19 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     );
   }
 
-  // void _onStatusRequested(Map<PermissionGroup, PermissionStatus> statuses) {
-  //   final status = statuses[PermissionGroup.notification];
-  //   if (status != PermissionStatus.granted) {
-  //     // On iOS if "deny" is pressed, open App Settings
-  //     PermissionHandler().openAppSettings();
-  //   } else {
-  //     _updateStatus(status);
-  //   }
-  // }
+  void _onStatusRequested(Map<PermissionGroup, PermissionStatus> statuses) {
+    final status = statuses[PermissionGroup.notification];
+    if (status != PermissionStatus.granted) {
+      // On iOS if "deny" is pressed, open App Settings
+      PermissionHandler().openAppSettings();
+    } else {
+      _updateStatus(status);
+    }
+  }
 
-  // void _askPermission() {
-  //   PermissionHandler().requestPermissions(
-  //       [PermissionGroup.notification]).then(_onStatusRequested);
-  // }
+  void _askPermission() {
+    PermissionHandler().requestPermissions(
+        [PermissionGroup.notification]).then(_onStatusRequested);
+  }
 
 }
