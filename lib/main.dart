@@ -42,9 +42,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.notification)
-        .then(_updateStatus);
+    // PermissionHandler()
+    //     .checkPermissionStatus(PermissionGroup.notification)
+    //     .then(_updateStatus);
   }
 
   void dispose() {
@@ -54,9 +54,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      PermissionHandler()
-          .checkPermissionStatus(PermissionGroup.notification)
-          .then(_updateStatus);
+      // PermissionHandler()
+      //     .checkPermissionStatus(PermissionGroup.notification)
+      //     .then(_updateStatus);
       print('resumed');
     }
     if (state == AppLifecycleState.detached) {

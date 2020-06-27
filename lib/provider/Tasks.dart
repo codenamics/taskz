@@ -57,9 +57,11 @@ class Tasks with ChangeNotifier {
           'description': task.description,
           'isCompleted': false
         }));
-
-    await fetchTodos();
-    notifyListeners();
+  _tasks.add(task);
+  notifyListeners();
+    // await fetchTodos();
+    
+    
   }
 
   Future<void> updateTask(String id, Task newTask) async {
